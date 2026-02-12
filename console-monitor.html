@@ -1,0 +1,258 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Console Monitor - Live Updates</title>
+    <style>
+        body {
+            font-family: monospace;
+            background: #1e1e1e;
+            color: #00ff00;
+            margin: 0;
+            padding: 20px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        h1 {
+            color: #ffff00;
+            border-bottom: 2px solid #00ff00;
+            padding-bottom: 10px;
+        }
+        .log-container {
+            background: #0d0d0d;
+            border: 1px solid #00ff00;
+            padding: 15px;
+            border-radius: 5px;
+            height: 600px;
+            overflow-y: auto;
+            margin: 20px 0;
+            font-size: 12px;
+            line-height: 1.6;
+        }
+        .log-entry {
+            margin: 5px 0;
+            padding: 3px 5px;
+            border-left: 3px solid transparent;
+        }
+        .log-entry.success { border-left-color: #00ff00; color: #00ff00; }
+        .log-entry.error { border-left-color: #ff0000; color: #ff0000; }
+        .log-entry.warn { border-left-color: #ffaa00; color: #ffaa00; }
+        .log-entry.info { border-left-color: #00aaff; color: #00aaff; }
+        .log-entry.debug { border-left-color: #aa00ff; color: #aa00ff; opacity: 0.8; }
+        .controls {
+            background: #222;
+            padding: 15px;
+            border-radius: 5px;
+            margin: 20px 0;
+        }
+        button {
+            background: #00ff00;
+            color: #000;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 3px;
+            cursor: pointer;
+            margin-right: 10px;
+            font-weight: bold;
+        }
+        button:hover { background: #00dd00; }
+        .stats {
+            display: grid;
+            grid-template-columns: 1fr 1fr 1fr;
+            gap: 15px;
+            margin: 20px 0;
+        }
+        .stat-box {
+            background: #222;
+            padding: 15px;
+            border-radius: 5px;
+            border-left: 3px solid #00ff00;
+        }
+        .stat-box h3 {
+            margin: 0 0 10px 0;
+            color: #ffff00;
+        }
+        .stat-value {
+            font-size: 24px;
+            color: #00ff00;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+    <h1>🔍 Real-Time Console Monitor</h1>
+    
+    <div class="controls">
+        <button onclick="clearLogs()">Clear Logs</button>
+        <button onclick="testTaint()">Test Taint</button>
+        <button onclick="testFetch()">Test Fetch</button>
+        <button onclick="scrollToBottom()">Scroll to Bottom</button>
+    </div>
+
+    <div class="stats">
+        <div class="stat-box">
+            <h3>Total Logs</h3>
+            <div class="stat-value" id="log-count">0</div>
+        </div>
+        <div class="stat-box">
+            <h3>Last Update</h3>
+            <div class="stat-value" id="last-update" style="font-size: 12px;">--:--:--</div>
+        </div>
+        <div class="stat-box">
+            <h3>Backend Status</h3>
+            <div class="stat-value" id="backend-status" style="color: #ffaa00;">Checking...</div>
+        </div>
+    </div>
+
+    <div class="log-container" id="log-container"></div>
+
+    <script>
+        const logContainer = document.getElementById('log-container');
+        let logs = [];
+        
+        // Capture console output
+        const originalLog = console.log;
+        const originalError = console.error;
+        const originalWarn = console.warn;
+        const originalInfo = console.info;
+
+        console.log = function(...args) {
+            originalLog.apply(console, args);
+            addLog('info', args.join(' '));
+        };
+
+        console.error = function(...args) {
+            originalError.apply(console, args);
+            addLog('error', args.join(' '));
+        };
+
+        console.warn = function(...args) {
+            originalWarn.apply(console, args);
+            addLog('warn', args.join(' '));
+        };
+
+        console.info = function(...args) {
+            originalInfo.apply(console, args);
+            addLog('info', args.join(' '));
+        };
+
+        function addLog(type, message) {
+            const timestamp = new Date().toLocaleTimeString();
+            logs.push({type, message, timestamp});
+            
+            const entry = document.createElement('div');
+            entry.className = `log-entry ${type}`;
+            entry.textContent = `[${timestamp}] ${message}`;
+            logContainer.appendChild(entry);
+            
+            // Keep only last 500 logs in display
+            if (logs.length > 500) {
+                logs.shift();
+                logContainer.firstChild.remove();
+            }
+            
+            document.getElementById('log-count').textContent = logs.length;
+            document.getElementById('last-update').textContent = timestamp;
+            
+            scrollToBottom();
+        }
+
+        function clearLogs() {
+            logs = [];
+            logContainer.innerHTML = '';
+            document.getElementById('log-count').textContent = '0';
+        }
+
+        function scrollToBottom() {
+            logContainer.scrollTop = logContainer.scrollHeight;
+        }
+
+        async function testTaint() {
+            console.log('🧪 Testing Taint action...');
+            try {
+                const resp = await fetch('/api/nodes');
+                const nodes = await resp.json();
+                console.log(`Found ${nodes.length} nodes`);
+                if (nodes.length > 0) {
+                    const node = nodes[0];
+                    console.log(`Testing taint on: ${node.node_id}`);
+                    const taintResp = await fetch(`/api/nodes/${node.node_id}/taint`, {
+                        method: 'POST',
+                        headers: {'Content-Type': 'application/json'},
+                        body: JSON.stringify({taint: 'degradation=true:NoSchedule'})
+                    });
+                    console.log(`Taint response: ${taintResp.status}`);
+                    const updated = await taintResp.json();
+                    console.log('Updated node:', updated.node_name, 'Taints:', updated.taints.length);
+                }
+            } catch (e) {
+                console.error('Taint test error:', e.message);
+            }
+        }
+
+        async function testFetch() {
+            console.log('🧪 Testing Fetch /api/nodes...');
+            try {
+                const resp = await fetch('/api/nodes');
+                const nodes = await resp.json();
+                console.log(`✓ Fetched ${nodes.length} nodes`);
+                nodes.forEach((n, i) => {
+                    console.log(`  [${i}] ${n.node_name}: ${n.cpu_usage.toFixed(1)}% CPU, ${n.memory_usage.toFixed(1)}% Memory, ${n.taints.length} taints`);
+                });
+            } catch (e) {
+                console.error('Fetch error:', e.message);
+            }
+        }
+
+        async function checkBackend() {
+            try {
+                const resp = await fetch('/api/health');
+                if (resp.ok) {
+                    const health = await resp.json();
+                    document.getElementById('backend-status').textContent = 'ONLINE ✓';
+                    document.getElementById('backend-status').style.color = '#00ff00';
+                    console.log(`✓ Backend healthy: ${health.status}`);
+                } else {
+                    document.getElementById('backend-status').textContent = 'ERROR';
+                    document.getElementById('backend-status').style.color = '#ff0000';
+                }
+            } catch (e) {
+                document.getElementById('backend-status').textContent = 'OFFLINE';
+                document.getElementById('backend-status').style.color = '#ff0000';
+                console.error('Backend check failed:', e.message);
+            }
+        }
+
+        // Start monitoring
+        console.log('═══════════════════════════════════════════════════');
+        console.log('   INFRASTRUCTURE MONITOR - CONSOLE LIVE VIEW');
+        console.log('═══════════════════════════════════════════════════');
+        console.log('Logs are captured and displayed in real-time below.');
+        console.log('Open http://127.0.0.1:5000 in another tab to see the main UI.');
+        console.log('Watch this console as you click buttons on the main interface.');
+        console.log('═══════════════════════════════════════════════════');
+
+        // Check backend periodically
+        checkBackend();
+        setInterval(checkBackend, 5000);
+
+        // Load and run the main monitoring script
+        const script = document.createElement('script');
+        script.src = '/script.js';
+        script.onload = () => console.log('✓ Main monitoring script loaded');
+        script.onerror = () => console.error('✗ Failed to load main monitoring script');
+        document.head.appendChild(script);
+
+        // Also initialize the monitoring
+        setTimeout(() => {
+            if (window.InfrastructureMonitor) {
+                console.log('✓ InfrastructureMonitor class available');
+                const monitor = new InfrastructureMonitor();
+                window.monitor = monitor;
+                monitor.initialize();
+            } else {
+                console.error('✗ InfrastructureMonitor not found');
+            }
+        }, 2000);
+    </script>
+</body>
+</html>

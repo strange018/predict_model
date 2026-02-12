@@ -1,0 +1,333 @@
+---
+# Namespace for the predictive infrastructure system
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: predictive-infra
+  labels:
+    app: predictive-infrastructure
+
+---
+# ConfigMap for ML model configuration
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: ml-config
+  namespace: predictive-infra
+data:
+  risk_threshold: "0.65"
+  retrain_interval: "24h"
+  monitoring_interval: "3s"
+
+---
+# ServiceAccount for the backend
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: predictive-backend
+  namespace: predictive-infra
+
+---
+# ClusterRole for node management
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRole
+metadata:
+  name: predictive-node-manager
+rules:
+  # Read node information
+  - apiGroups: [""]
+    resources: ["nodes"]
+    verbs: ["get", "list", "watch"]
+  
+  # Modify node (taints, labels)
+  - apiGroups: [""]
+    resources: ["nodes"]
+    verbs: ["patch", "update"]
+  
+  # Read pod information
+  - apiGroups: [""]
+    resources: ["pods"]
+    verbs: ["get", "list", "watch"]
+  
+  # Evict pods (for node draining)
+  - apiGroups: ["policy"]
+    resources: ["poddisruptionbudgets"]
+    verbs: ["get", "list"]
+  
+  # Create evictions
+  - apiGroups: [""]
+    resources: ["pods/eviction"]
+    verbs: ["create"]
+
+---
+# ClusterRoleBinding
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRoleBinding
+metadata:
+  name: predictive-node-manager-binding
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: predictive-node-manager
+subjects:
+  - kind: ServiceAccount
+    name: predictive-backend
+    namespace: predictive-infra
+
+---
+# Deployment for the backend service
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: predictive-backend
+  namespace: predictive-infra
+  labels:
+    app: predictive-infrastructure
+    component: backend
+spec:
+  replicas: 1
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxSurge: 1
+      maxUnavailable: 0
+  selector:
+    matchLabels:
+      app: predictive-infrastructure
+      component: backend
+  template:
+    metadata:
+      labels:
+        app: predictive-infrastructure
+        component: backend
+      annotations:
+        prometheus.io/scrape: "true"
+        prometheus.io/port: "5000"
+        prometheus.io/path: "/metrics"
+    spec:
+      serviceAccountName: predictive-backend
+      containers:
+      - name: backend
+        image: predictive-infrastructure:latest
+        imagePullPolicy: IfNotPresent
+        ports:
+        - name: http
+          containerPort: 5000
+          protocol: TCP
+        env:
+        - name: FLASK_ENV
+          value: production
+        - name: PYTHONUNBUFFERED
+          value: "1"
+        livenessProbe:
+          httpGet:
+            path: /api/health
+            port: http
+          initialDelaySeconds: 10
+          periodSeconds: 30
+          timeoutSeconds: 5
+          failureThreshold: 3
+        readinessProbe:
+          httpGet:
+            path: /api/health
+            port: http
+          initialDelaySeconds: 5
+          periodSeconds: 10
+          timeoutSeconds: 3
+          failureThreshold: 2
+        resources:
+          requests:
+            cpu: 250m
+            memory: 256Mi
+          limits:
+            cpu: 500m
+            memory: 512Mi
+        volumeMounts:
+        - name: ml-config
+          mountPath: /etc/ml-config
+          readOnly: true
+        securityContext:
+          runAsNonRoot: true
+          runAsUser: 1000
+          allowPrivilegeEscalation: false
+          readOnlyRootFilesystem: false
+          capabilities:
+            drop:
+            - ALL
+      volumes:
+      - name: ml-config
+        configMap:
+          name: ml-config
+      affinity:
+        nodeAffinity:
+          preferredDuringSchedulingIgnoredDuringExecution:
+          - weight: 100
+            preference:
+              matchExpressions:
+              - key: node-role.kubernetes.io/control-plane
+                operator: DoesNotExist
+
+---
+# Service for the backend
+apiVersion: v1
+kind: Service
+metadata:
+  name: predictive-backend
+  namespace: predictive-infra
+  labels:
+    app: predictive-infrastructure
+    component: backend
+spec:
+  type: ClusterIP
+  ports:
+  - name: http
+    port: 5000
+    targetPort: http
+    protocol: TCP
+  selector:
+    app: predictive-infrastructure
+    component: backend
+
+---
+# Deployment for the frontend
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: predictive-frontend
+  namespace: predictive-infra
+  labels:
+    app: predictive-infrastructure
+    component: frontend
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: predictive-infrastructure
+      component: frontend
+  template:
+    metadata:
+      labels:
+        app: predictive-infrastructure
+        component: frontend
+    spec:
+      containers:
+      - name: frontend
+        image: nginx:alpine
+        ports:
+        - name: http
+          containerPort: 80
+          protocol: TCP
+        volumeMounts:
+        - name: nginx-config
+          mountPath: /etc/nginx/nginx.conf
+          subPath: nginx.conf
+          readOnly: true
+        - name: html-files
+          mountPath: /usr/share/nginx/html
+          readOnly: true
+        livenessProbe:
+          httpGet:
+            path: /
+            port: http
+          initialDelaySeconds: 10
+          periodSeconds: 30
+        readinessProbe:
+          httpGet:
+            path: /
+            port: http
+          initialDelaySeconds: 5
+          periodSeconds: 10
+        resources:
+          requests:
+            cpu: 100m
+            memory: 128Mi
+          limits:
+            cpu: 200m
+            memory: 256Mi
+      volumes:
+      - name: nginx-config
+        configMap:
+          name: nginx-config
+      - name: html-files
+        configMap:
+          name: frontend-files
+
+---
+# ConfigMap for nginx config
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: nginx-config
+  namespace: predictive-infra
+data:
+  nginx.conf: |
+    events { worker_connections 1024; }
+    http {
+      upstream backend { server predictive-backend:5000; }
+      server {
+        listen 80;
+        location / {
+          root /usr/share/nginx/html;
+          try_files $uri /index.html;
+        }
+        location /api/ {
+          proxy_pass http://backend;
+          proxy_http_version 1.1;
+          proxy_buffering off;
+          proxy_read_timeout 86400;
+        }
+      }
+    }
+
+---
+# ConfigMap for frontend files
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: frontend-files
+  namespace: predictive-infra
+data:
+  index.html: |
+    <!DOCTYPE html>
+    <html lang="en">
+    <head>
+      <meta charset="UTF-8">
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <title>Predictive Infrastructure Intelligence</title>
+      <link rel="stylesheet" href="styles.css">
+    </head>
+    <body>
+      <div class="container">
+        <header class="header">
+          <h1>Predictive Infrastructure Intelligence (K8s)</h1>
+          <div class="status-badge"><span class="status-indicator active"></span> Kubernetes Connected</div>
+        </header>
+        <main class="main-content" id="app">
+          <!-- Frontend will load from script.js -->
+          <p>Loading...</p>
+        </main>
+      </div>
+      <script src="script.js"></script>
+    </body>
+    </html>
+
+---
+# Service for the frontend
+apiVersion: v1
+kind: Service
+metadata:
+  name: predictive-frontend
+  namespace: predictive-infra
+  labels:
+    app: predictive-infrastructure
+    component: frontend
+spec:
+  type: LoadBalancer
+  ports:
+  - name: http
+    port: 80
+    targetPort: http
+    protocol: TCP
+  selector:
+    app: predictive-infrastructure
+    component: frontend

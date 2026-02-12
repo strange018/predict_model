@@ -1,0 +1,39 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: infra-backend
+  labels:
+    app: infra-backend
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: infra-backend
+  template:
+    metadata:
+      labels:
+        app: infra-backend
+    spec:
+      containers:
+        - name: backend
+          image: infra-backend:latest
+          imagePullPolicy: IfNotPresent
+          ports:
+            - containerPort: 5000
+          env:
+            - name: FLASK_ENV
+              value: production
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: infra-backend-svc
+spec:
+  selector:
+    app: infra-backend
+  ports:
+    - protocol: TCP
+      port: 80
+      targetPort: 5000
+  type: ClusterIP

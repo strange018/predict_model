@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Predictive Infrastructure Intelligence</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="container">
+        <!-- Header -->
+        <header class="header">
+            <div class="header-content">
+                <h1>Predictive Infrastructure Intelligence</h1>
+                <div class="status-badge">
+                    <span class="status-indicator active"></span>
+                    <span class="status-text">Monitoring Active</span>
+                </div>
+            </div>
+        </header>
+
+        <!-- Main Content -->
+        <main class="main-content">
+            <!-- Stats Section -->
+            <section class="stats-section">
+                <div class="stat-card">
+                    <div class="stat-label">Nodes Being Monitored</div>
+                    <div class="stat-value" id="nodes-monitored">0</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-label">Risks Detected</div>
+                    <div class="stat-value risk" id="risks-detected">0</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-label">Workloads Moved</div>
+                    <div class="stat-value success" id="workloads-moved">0</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-label">Last Update</div>
+                    <div class="stat-value" id="last-update">Just now</div>
+                </div>
+            </section>
+
+            <!-- Event Feed Section -->
+            <section class="event-section">
+                <div class="section-header">
+                    <h2>Event Log</h2>
+                    <div class="filter-controls">
+                        <button class="filter-btn active" data-filter="all">All</button>
+                        <button class="filter-btn" data-filter="risk">Risk</button>
+                        <button class="filter-btn" data-filter="action">Action</button>
+                        <button class="filter-btn" data-filter="info">Info</button>
+                    </div>
+                </div>
+
+                <div class="event-list" id="event-list">
+                    <!-- Events will be populated here -->
+                    <div class="empty-state">
+                        <p>Waiting for monitoring data...</p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Node Health Details -->
+            <section class="node-section">
+                <div class="section-header">
+                    <h2>Node Health Metrics</h2>
+                </div>
+                <div class="node-grid" id="node-grid">
+                    <!-- Node cards will be populated here -->
+                </div>
+            </section>
+        </main>
+
+        <!-- Footer -->
+        <footer class="footer">
+            <p>Predictive Infrastructure Intelligence System - Autonomous Workload Management</p>
+        </footer>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>

@@ -1,0 +1,54 @@
+version: '3.8'
+
+services:
+  # Backend API with ML/AI and Kubernetes integration
+  backend:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - "5000:5000"
+    environment:
+      - FLASK_ENV=production
+      - PYTHONUNBUFFERED=1
+    volumes:
+      - ~/.kube/config:/app/.kube/config:ro  # Mount kubeconfig for K8s access
+    networks:
+      - predictive-net
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:5000/api/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 5s
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "10m"
+        max-file: "3"
+
+  # Frontend (optional - can also be served separately)
+  frontend:
+    image: nginx:alpine
+    ports:
+      - "80:80"
+    volumes:
+      - ./nginx.conf:/etc/nginx/nginx.conf:ro
+      - ./index.html:/usr/share/nginx/html/index.html:ro
+      - ./styles.css:/usr/share/nginx/html/styles.css:ro
+      - ./script.js:/usr/share/nginx/html/script.js:ro
+    networks:
+      - predictive-net
+    depends_on:
+      - backend
+    restart: unless-stopped
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "10m"
+        max-file: "3"
+
+networks:
+  predictive-net:
+    driver: bridge
