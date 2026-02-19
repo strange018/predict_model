@@ -17555,3 +17555,139 @@
 2026-02-19 16:42:46,038 - __main__ - INFO - DEBUG: Returning cluster health: {'cluster_health_score': 100, 'average_node_health': 100, 'nodes_at_risk': 0, 'cluster_health_trend': 'stable', 'healthy_nodes': 0, 'degraded_nodes': 0, 'critical_nodes': 0}
 2026-02-19 16:42:46,039 - werkzeug - INFO - 127.0.0.1 - - [19/Feb/2026 16:42:46] "GET /api/analytics/cluster-health HTTP/1.1" 200 -
 2026-02-19 16:42:46,302 - __main__ - INFO - [MONITOR] Monitoring: Updated 5 nodes with fresh metrics
+2026-02-19 16:42:47,015 - werkzeug - INFO - 127.0.0.1 - - [19/Feb/2026 16:42:47] "GET /api/events HTTP/1.1" 200 -
+2026-02-19 16:42:47,028 - __main__ - INFO - 📊 Stats: 5 nodes | Health: 66.7% | Risks: 2 | Avg Status: 3H 0D | Migrations: 0
+2026-02-19 16:42:47,032 - werkzeug - INFO - 127.0.0.1 - - [19/Feb/2026 16:42:47] "GET /api/stats HTTP/1.1" 200 -
+2026-02-19 16:42:47,250 - __main__ - INFO - [MONITOR] Monitoring: Updated 5 nodes with fresh metrics
+2026-02-19 16:42:47,988 - werkzeug - INFO - 127.0.0.1 - - [19/Feb/2026 16:42:47] "GET /api/nodes HTTP/1.1" 200 -
+2026-02-19 16:42:47,991 - __main__ - INFO - 📊 Stats: 5 nodes | Health: 66.7% | Risks: 2 | Avg Status: 3H 0D | Migrations: 0
+2026-02-19 16:42:47,993 - werkzeug - INFO - 127.0.0.1 - - [19/Feb/2026 16:42:47] "GET /api/stats HTTP/1.1" 200 -
+2026-02-19 16:42:47,994 - werkzeug - INFO - 127.0.0.1 - - [19/Feb/2026 16:42:47] "GET /api/events HTTP/1.1" 200 -
+2026-02-19 16:42:47,999 - __main__ - INFO - DEBUG: /api/analytics/cluster-health endpoint called
+2026-02-19 16:42:48,001 - kubernetes_manager - WARNING - Kubernetes config not available: Invalid kube-config file. No configuration found.
+2026-02-19 16:42:48,003 - kubernetes_manager - INFO - Will operate in DEMO MODE without real cluster
+2026-02-19 16:42:48,011 - kubernetes_manager - INFO - Kubernetes manager in DEMO MODE
+2026-02-19 16:42:48,014 - __main__ - INFO - DEBUG: Returning cluster health: {'cluster_health_score': 100, 'average_node_health': 100, 'nodes_at_risk': 0, 'cluster_health_trend': 'stable', 'healthy_nodes': 0, 'degraded_nodes': 0, 'critical_nodes': 0}
+2026-02-19 16:42:48,015 - werkzeug - INFO - 127.0.0.1 - - [19/Feb/2026 16:42:48] "GET /api/analytics/cluster-health HTTP/1.1" 200 -
+2026-02-19 16:42:49,012 - werkzeug - INFO - 127.0.0.1 - - [19/Feb/2026 16:42:49] "GET /api/events HTTP/1.1" 200 -
+2026-02-19 16:42:49,032 - __main__ - INFO - 📊 Stats: 5 nodes | Health: 66.7% | Risks: 2 | Avg Status: 3H 0D | Migrations: 0
+2026-02-19 16:42:49,036 - werkzeug - INFO - 127.0.0.1 - - [19/Feb/2026 16:42:49] "GET /api/stats HTTP/1.1" 200 -
+2026-02-19 16:42:49,172 - werkzeug - INFO - 127.0.0.1 - - [19/Feb/2026 16:42:49] "GET /api/nodes HTTP/1.1" 200 -
+2026-02-19 16:42:49,307 - __main__ - INFO - [MONITOR] Monitoring: Updated 5 nodes with fresh metrics
+2026-02-19 16:42:50,014 - werkzeug - INFO - 127.0.0.1 - - [19/Feb/2026 16:42:50] "GET /api/events HTTP/1.1" 200 -
+2026-02-19 16:42:50,022 - __main__ - INFO - 📊 Stats: 5 nodes | Health: 69.0% | Risks: 1 | Avg Status: 2H 2D | Migrations: 0
+2026-02-19 16:42:50,022 - werkzeug - INFO - 127.0.0.1 - - [19/Feb/2026 16:42:50] "GET /api/stats HTTP/1.1" 200 -
+2026-02-19 16:42:50,072 - __main__ - INFO - DEBUG: /api/analytics/cluster-health endpoint called
+2026-02-19 16:42:50,073 - kubernetes_manager - WARNING - Kubernetes config not available: Invalid kube-config file. No configuration found.
+2026-02-19 16:42:50,074 - kubernetes_manager - INFO - Will operate in DEMO MODE without real cluster
+2026-02-19 16:42:50,076 - kubernetes_manager - INFO - Kubernetes manager in DEMO MODE
+2026-02-19 16:42:50,077 - __main__ - INFO - DEBUG: Returning cluster health: {'cluster_health_score': 100, 'average_node_health': 100, 'nodes_at_risk': 0, 'cluster_health_trend': 'stable', 'healthy_nodes': 0, 'degraded_nodes': 0, 'critical_nodes': 0}
+2026-02-19 16:42:50,078 - werkzeug - INFO - 127.0.0.1 - - [19/Feb/2026 16:42:50] "GET /api/analytics/cluster-health HTTP/1.1" 200 -
+2026-02-19 16:42:50,256 - __main__ - INFO - [MONITOR] Monitoring: Updated 5 nodes with fresh metrics
+2026-02-19 16:42:50,989 - werkzeug - INFO - 127.0.0.1 - - [19/Feb/2026 16:42:50] "GET /api/nodes HTTP/1.1" 200 -
+2026-02-19 16:42:50,994 - __main__ - INFO - 📊 Stats: 5 nodes | Health: 69.0% | Risks: 1 | Avg Status: 2H 2D | Migrations: 0
+2026-02-19 16:42:50,997 - werkzeug - INFO - 127.0.0.1 - - [19/Feb/2026 16:42:50] "GET /api/stats HTTP/1.1" 200 -
+2026-02-19 16:42:50,996 - werkzeug - INFO - 127.0.0.1 - - [19/Feb/2026 16:42:50] "GET /api/events HTTP/1.1" 200 -
+2026-02-19 16:42:51,993 - __main__ - INFO - 📊 Stats: 5 nodes | Health: 69.0% | Risks: 1 | Avg Status: 2H 2D | Migrations: 0
+2026-02-19 16:42:51,995 - werkzeug - INFO - 127.0.0.1 - - [19/Feb/2026 16:42:51] "GET /api/stats HTTP/1.1" 200 -
+2026-02-19 16:42:51,997 - werkzeug - INFO - 127.0.0.1 - - [19/Feb/2026 16:42:51] "GET /api/nodes HTTP/1.1" 200 -
+2026-02-19 16:42:52,002 - werkzeug - INFO - 127.0.0.1 - - [19/Feb/2026 16:42:52] "GET /api/events HTTP/1.1" 200 -
+2026-02-19 16:42:52,015 - __main__ - INFO - DEBUG: /api/analytics/cluster-health endpoint called
+2026-02-19 16:42:52,021 - kubernetes_manager - WARNING - Kubernetes config not available: Invalid kube-config file. No configuration found.
+2026-02-19 16:42:52,023 - kubernetes_manager - INFO - Will operate in DEMO MODE without real cluster
+2026-02-19 16:42:52,024 - kubernetes_manager - INFO - Kubernetes manager in DEMO MODE
+2026-02-19 16:42:52,025 - __main__ - INFO - DEBUG: Returning cluster health: {'cluster_health_score': 100, 'average_node_health': 100, 'nodes_at_risk': 0, 'cluster_health_trend': 'stable', 'healthy_nodes': 0, 'degraded_nodes': 0, 'critical_nodes': 0}
+2026-02-19 16:42:52,029 - werkzeug - INFO - 127.0.0.1 - - [19/Feb/2026 16:42:52] "GET /api/analytics/cluster-health HTTP/1.1" 200 -
+2026-02-19 16:42:52,310 - __main__ - INFO - [MONITOR] Monitoring: Updated 5 nodes with fresh metrics
+2026-02-19 16:42:52,991 - werkzeug - INFO - 127.0.0.1 - - [19/Feb/2026 16:42:52] "GET /api/events HTTP/1.1" 200 -
+2026-02-19 16:42:52,995 - __main__ - INFO - 📊 Stats: 5 nodes | Health: 53.7% | Risks: 2 | Avg Status: 2H 1D | Migrations: 0
+2026-02-19 16:42:52,997 - werkzeug - INFO - 127.0.0.1 - - [19/Feb/2026 16:42:52] "GET /api/stats HTTP/1.1" 200 -
+2026-02-19 16:42:53,264 - __main__ - INFO - [MONITOR] Monitoring: Updated 5 nodes with fresh metrics
+2026-02-19 16:42:54,016 - werkzeug - INFO - 127.0.0.1 - - [19/Feb/2026 16:42:54] "GET /api/nodes HTTP/1.1" 200 -
+2026-02-19 16:42:54,023 - werkzeug - INFO - 127.0.0.1 - - [19/Feb/2026 16:42:54] "GET /api/events HTTP/1.1" 200 -
+2026-02-19 16:42:54,024 - __main__ - INFO - 📊 Stats: 5 nodes | Health: 53.7% | Risks: 2 | Avg Status: 2H 1D | Migrations: 0
+2026-02-19 16:42:54,030 - werkzeug - INFO - 127.0.0.1 - - [19/Feb/2026 16:42:54] "GET /api/stats HTTP/1.1" 200 -
+2026-02-19 16:42:54,048 - __main__ - INFO - DEBUG: /api/analytics/cluster-health endpoint called
+2026-02-19 16:42:54,050 - kubernetes_manager - WARNING - Kubernetes config not available: Invalid kube-config file. No configuration found.
+2026-02-19 16:42:54,051 - kubernetes_manager - INFO - Will operate in DEMO MODE without real cluster
+2026-02-19 16:42:54,052 - kubernetes_manager - INFO - Kubernetes manager in DEMO MODE
+2026-02-19 16:42:54,053 - __main__ - INFO - DEBUG: Returning cluster health: {'cluster_health_score': 100, 'average_node_health': 100, 'nodes_at_risk': 0, 'cluster_health_trend': 'stable', 'healthy_nodes': 0, 'degraded_nodes': 0, 'critical_nodes': 0}
+2026-02-19 16:42:54,057 - werkzeug - INFO - 127.0.0.1 - - [19/Feb/2026 16:42:54] "GET /api/analytics/cluster-health HTTP/1.1" 200 -
+2026-02-19 16:42:54,983 - __main__ - INFO - 📊 Stats: 5 nodes | Health: 53.7% | Risks: 2 | Avg Status: 2H 1D | Migrations: 0
+2026-02-19 16:42:54,985 - werkzeug - INFO - 127.0.0.1 - - [19/Feb/2026 16:42:54] "GET /api/stats HTTP/1.1" 200 -
+2026-02-19 16:42:54,988 - werkzeug - INFO - 127.0.0.1 - - [19/Feb/2026 16:42:54] "GET /api/nodes HTTP/1.1" 200 -
+2026-02-19 16:42:55,004 - werkzeug - INFO - 127.0.0.1 - - [19/Feb/2026 16:42:55] "GET /api/events HTTP/1.1" 200 -
+2026-02-19 16:42:55,316 - __main__ - INFO - [MONITOR] Monitoring: Updated 5 nodes with fresh metrics
+2026-02-19 16:42:55,981 - __main__ - INFO - 📊 Stats: 5 nodes | Health: 86.5% | Risks: 0 | Avg Status: 4H 1D | Migrations: 0
+2026-02-19 16:42:55,983 - werkzeug - INFO - 127.0.0.1 - - [19/Feb/2026 16:42:55] "GET /api/stats HTTP/1.1" 200 -
+2026-02-19 16:42:55,985 - werkzeug - INFO - 127.0.0.1 - - [19/Feb/2026 16:42:55] "GET /api/events HTTP/1.1" 200 -
+2026-02-19 16:42:55,994 - __main__ - INFO - DEBUG: /api/analytics/cluster-health endpoint called
+2026-02-19 16:42:56,000 - kubernetes_manager - WARNING - Kubernetes config not available: Invalid kube-config file. No configuration found.
+2026-02-19 16:42:56,004 - kubernetes_manager - INFO - Will operate in DEMO MODE without real cluster
+2026-02-19 16:42:56,007 - kubernetes_manager - INFO - Kubernetes manager in DEMO MODE
+2026-02-19 16:42:56,008 - __main__ - INFO - DEBUG: Returning cluster health: {'cluster_health_score': 100, 'average_node_health': 100, 'nodes_at_risk': 0, 'cluster_health_trend': 'stable', 'healthy_nodes': 0, 'degraded_nodes': 0, 'critical_nodes': 0}
+2026-02-19 16:42:56,010 - werkzeug - INFO - 127.0.0.1 - - [19/Feb/2026 16:42:56] "GET /api/analytics/cluster-health HTTP/1.1" 200 -
+2026-02-19 16:42:56,269 - __main__ - INFO - [MONITOR] Monitoring: Updated 5 nodes with fresh metrics
+2026-02-19 16:42:56,987 - werkzeug - INFO - 127.0.0.1 - - [19/Feb/2026 16:42:56] "GET /api/nodes HTTP/1.1" 200 -
+2026-02-19 16:42:56,989 - werkzeug - INFO - 127.0.0.1 - - [19/Feb/2026 16:42:56] "GET /api/events HTTP/1.1" 200 -
+2026-02-19 16:42:57,001 - __main__ - INFO - 📊 Stats: 5 nodes | Health: 86.5% | Risks: 0 | Avg Status: 4H 1D | Migrations: 0
+2026-02-19 16:42:57,002 - werkzeug - INFO - 127.0.0.1 - - [19/Feb/2026 16:42:57] "GET /api/stats HTTP/1.1" 200 -
+2026-02-19 16:42:57,991 - werkzeug - INFO - 127.0.0.1 - - [19/Feb/2026 16:42:57] "GET /api/events HTTP/1.1" 200 -
+2026-02-19 16:42:57,992 - __main__ - INFO - 📊 Stats: 5 nodes | Health: 86.5% | Risks: 0 | Avg Status: 4H 1D | Migrations: 0
+2026-02-19 16:42:57,994 - werkzeug - INFO - 127.0.0.1 - - [19/Feb/2026 16:42:57] "GET /api/stats HTTP/1.1" 200 -
+2026-02-19 16:42:57,996 - werkzeug - INFO - 127.0.0.1 - - [19/Feb/2026 16:42:57] "GET /api/nodes HTTP/1.1" 200 -
+2026-02-19 16:42:58,070 - __main__ - INFO - DEBUG: /api/analytics/cluster-health endpoint called
+2026-02-19 16:42:58,071 - kubernetes_manager - WARNING - Kubernetes config not available: Invalid kube-config file. No configuration found.
+2026-02-19 16:42:58,072 - kubernetes_manager - INFO - Will operate in DEMO MODE without real cluster
+2026-02-19 16:42:58,073 - kubernetes_manager - INFO - Kubernetes manager in DEMO MODE
+2026-02-19 16:42:58,074 - __main__ - INFO - DEBUG: Returning cluster health: {'cluster_health_score': 100, 'average_node_health': 100, 'nodes_at_risk': 0, 'cluster_health_trend': 'stable', 'healthy_nodes': 0, 'degraded_nodes': 0, 'critical_nodes': 0}
+2026-02-19 16:42:58,077 - werkzeug - INFO - 127.0.0.1 - - [19/Feb/2026 16:42:58] "GET /api/analytics/cluster-health HTTP/1.1" 200 -
+2026-02-19 16:42:58,321 - __main__ - INFO - [MONITOR] Monitoring: Updated 5 nodes with fresh metrics
+2026-02-19 16:42:58,993 - werkzeug - INFO - 127.0.0.1 - - [19/Feb/2026 16:42:58] "GET /api/events HTTP/1.1" 200 -
+2026-02-19 16:42:59,001 - __main__ - INFO - 📊 Stats: 5 nodes | Health: 59.5% | Risks: 2 | Avg Status: 2H 1D | Migrations: 0
+2026-02-19 16:42:59,003 - werkzeug - INFO - 127.0.0.1 - - [19/Feb/2026 16:42:59] "GET /api/stats HTTP/1.1" 200 -
+2026-02-19 16:42:59,275 - __main__ - INFO - [MONITOR] Monitoring: Updated 5 nodes with fresh metrics
+2026-02-19 16:42:59,987 - werkzeug - INFO - 127.0.0.1 - - [19/Feb/2026 16:42:59] "GET /api/nodes HTTP/1.1" 200 -
+2026-02-19 16:42:59,990 - __main__ - INFO - 📊 Stats: 5 nodes | Health: 59.5% | Risks: 2 | Avg Status: 2H 1D | Migrations: 0
+2026-02-19 16:42:59,991 - werkzeug - INFO - 127.0.0.1 - - [19/Feb/2026 16:42:59] "GET /api/stats HTTP/1.1" 200 -
+2026-02-19 16:42:59,997 - werkzeug - INFO - 127.0.0.1 - - [19/Feb/2026 16:42:59] "GET /api/events HTTP/1.1" 200 -
+2026-02-19 16:43:00,023 - __main__ - INFO - DEBUG: /api/analytics/cluster-health endpoint called
+2026-02-19 16:43:00,026 - kubernetes_manager - WARNING - Kubernetes config not available: Invalid kube-config file. No configuration found.
+2026-02-19 16:43:00,031 - kubernetes_manager - INFO - Will operate in DEMO MODE without real cluster
+2026-02-19 16:43:00,035 - kubernetes_manager - INFO - Kubernetes manager in DEMO MODE
+2026-02-19 16:43:00,040 - __main__ - INFO - DEBUG: Returning cluster health: {'cluster_health_score': 100, 'average_node_health': 100, 'nodes_at_risk': 0, 'cluster_health_trend': 'stable', 'healthy_nodes': 0, 'degraded_nodes': 0, 'critical_nodes': 0}
+2026-02-19 16:43:00,048 - werkzeug - INFO - 127.0.0.1 - - [19/Feb/2026 16:43:00] "GET /api/analytics/cluster-health HTTP/1.1" 200 -
+2026-02-19 16:43:00,987 - werkzeug - INFO - 127.0.0.1 - - [19/Feb/2026 16:43:00] "GET /api/events HTTP/1.1" 200 -
+2026-02-19 16:43:00,990 - __main__ - INFO - 📊 Stats: 5 nodes | Health: 59.5% | Risks: 2 | Avg Status: 2H 1D | Migrations: 0
+2026-02-19 16:43:00,991 - werkzeug - INFO - 127.0.0.1 - - [19/Feb/2026 16:43:00] "GET /api/stats HTTP/1.1" 200 -
+2026-02-19 16:43:00,993 - werkzeug - INFO - 127.0.0.1 - - [19/Feb/2026 16:43:00] "GET /api/nodes HTTP/1.1" 200 -
+2026-02-19 16:43:01,325 - __main__ - INFO - [MONITOR] Monitoring: Updated 5 nodes with fresh metrics
+2026-02-19 16:43:01,989 - werkzeug - INFO - 127.0.0.1 - - [19/Feb/2026 16:43:01] "GET /api/events HTTP/1.1" 200 -
+2026-02-19 16:43:01,990 - __main__ - INFO - 📊 Stats: 5 nodes | Health: 72.2% | Risks: 1 | Avg Status: 4H 0D | Migrations: 0
+2026-02-19 16:43:01,993 - werkzeug - INFO - 127.0.0.1 - - [19/Feb/2026 16:43:01] "GET /api/stats HTTP/1.1" 200 -
+2026-02-19 16:43:01,995 - __main__ - INFO - DEBUG: /api/analytics/cluster-health endpoint called
+2026-02-19 16:43:01,998 - kubernetes_manager - WARNING - Kubernetes config not available: Invalid kube-config file. No configuration found.
+2026-02-19 16:43:01,998 - kubernetes_manager - INFO - Will operate in DEMO MODE without real cluster
+2026-02-19 16:43:01,999 - kubernetes_manager - INFO - Kubernetes manager in DEMO MODE
+2026-02-19 16:43:01,999 - __main__ - INFO - DEBUG: Returning cluster health: {'cluster_health_score': 100, 'average_node_health': 100, 'nodes_at_risk': 0, 'cluster_health_trend': 'stable', 'healthy_nodes': 0, 'degraded_nodes': 0, 'critical_nodes': 0}
+2026-02-19 16:43:02,001 - werkzeug - INFO - 127.0.0.1 - - [19/Feb/2026 16:43:02] "GET /api/analytics/cluster-health HTTP/1.1" 200 -
+2026-02-19 16:43:02,281 - __main__ - INFO - [MONITOR] Monitoring: Updated 5 nodes with fresh metrics
+2026-02-19 16:43:02,991 - werkzeug - INFO - 127.0.0.1 - - [19/Feb/2026 16:43:02] "GET /api/events HTTP/1.1" 200 -
+2026-02-19 16:43:02,993 - werkzeug - INFO - 127.0.0.1 - - [19/Feb/2026 16:43:02] "GET /api/nodes HTTP/1.1" 200 -
+2026-02-19 16:43:02,995 - __main__ - INFO - 📊 Stats: 5 nodes | Health: 72.2% | Risks: 1 | Avg Status: 4H 0D | Migrations: 0
+2026-02-19 16:43:02,996 - werkzeug - INFO - 127.0.0.1 - - [19/Feb/2026 16:43:02] "GET /api/stats HTTP/1.1" 200 -
+2026-02-19 16:43:03,994 - __main__ - INFO - 📊 Stats: 5 nodes | Health: 72.2% | Risks: 1 | Avg Status: 4H 0D | Migrations: 0
+2026-02-19 16:43:03,996 - werkzeug - INFO - 127.0.0.1 - - [19/Feb/2026 16:43:03] "GET /api/stats HTTP/1.1" 200 -
+2026-02-19 16:43:03,998 - werkzeug - INFO - 127.0.0.1 - - [19/Feb/2026 16:43:03] "GET /api/nodes HTTP/1.1" 200 -
+2026-02-19 16:43:04,003 - werkzeug - INFO - 127.0.0.1 - - [19/Feb/2026 16:43:04] "GET /api/events HTTP/1.1" 200 -
+2026-02-19 16:43:04,011 - __main__ - INFO - DEBUG: /api/analytics/cluster-health endpoint called
+2026-02-19 16:43:04,016 - kubernetes_manager - WARNING - Kubernetes config not available: Invalid kube-config file. No configuration found.
+2026-02-19 16:43:04,017 - kubernetes_manager - INFO - Will operate in DEMO MODE without real cluster
+2026-02-19 16:43:04,020 - kubernetes_manager - INFO - Kubernetes manager in DEMO MODE
+2026-02-19 16:43:04,021 - __main__ - INFO - DEBUG: Returning cluster health: {'cluster_health_score': 100, 'average_node_health': 100, 'nodes_at_risk': 0, 'cluster_health_trend': 'stable', 'healthy_nodes': 0, 'degraded_nodes': 0, 'critical_nodes': 0}
+2026-02-19 16:43:04,023 - werkzeug - INFO - 127.0.0.1 - - [19/Feb/2026 16:43:04] "GET /api/analytics/cluster-health HTTP/1.1" 200 -
+2026-02-19 16:43:04,331 - __main__ - INFO - [MONITOR] Monitoring: Updated 5 nodes with fresh metrics
+2026-02-19 16:43:05,016 - werkzeug - INFO - 127.0.0.1 - - [19/Feb/2026 16:43:05] "GET /api/events HTTP/1.1" 200 -
+2026-02-19 16:43:05,019 - __main__ - INFO - 📊 Stats: 5 nodes | Health: 69.8% | Risks: 1 | Avg Status: 2H 2D | Migrations: 0
+2026-02-19 16:43:05,022 - werkzeug - INFO - 127.0.0.1 - - [19/Feb/2026 16:43:05] "GET /api/stats HTTP/1.1" 200 -
+2026-02-19 16:43:05,287 - __main__ - INFO - [MONITOR] Monitoring: Updated 5 nodes with fresh metrics
