@@ -5,11 +5,22 @@ Handles cluster communication, node management, and workload orchestration
 
 import logging
 import os
-from kubernetes import client, config
-from kubernetes.client.rest import ApiException
-import random
 
 logger = logging.getLogger(__name__)
+
+# Import kubernetes with error handling to prevent startup failure
+try:
+    from kubernetes import client, config
+    from kubernetes.client.rest import ApiException
+    KUBERNETES_AVAILABLE = True
+except ImportError as e:
+    logger.warning(f"⚠️ Kubernetes not available: {e}")
+    client = None
+    config = None
+    ApiException = Exception
+    KUBERNETES_AVAILABLE = False
+
+import random
 
 
 class KubernetesManager:
@@ -21,6 +32,12 @@ class KubernetesManager:
     def __init__(self):
         """Initialize Kubernetes client"""
         self.available = False
+        
+        # If kubernetes library couldn't be imported, skip initialization
+        if not KUBERNETES_AVAILABLE or config is None:
+            logger.info("ℹ️ Kubernetes not available, running in demo mode")
+            return
+        
         try:
             # Try to load in-cluster config first (running in pod)
             config.load_incluster_config()

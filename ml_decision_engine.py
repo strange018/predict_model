@@ -26,7 +26,7 @@ class MLDecisionEngine:
             'network_latency', 'disk_io', 'pod_count'
         ]
         self._train_initial_model()
-        logger.info("✓ ML Decision Engine initialized")
+        logger.info("[OK] ML Decision Engine initialized")
     
     def _initialize_model(self):
         """Initialize the ML model"""
@@ -57,7 +57,7 @@ class MLDecisionEngine:
         # Train model
         self.model.fit(X_train, y_train)
         
-        logger.info("✓ ML model trained on synthetic data")
+        logger.info("[OK] ML model trained on synthetic data")
     
     def predict_degradation(self, node_data):
         """

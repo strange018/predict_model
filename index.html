@@ -1,20 +1,32 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" data-theme="light">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Predictive Infrastructure Intelligence</title>
     <link rel="stylesheet" href="styles.css">
+    <!-- Chart.js for visualizations -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
+    <!-- Socket.IO for real-time updates -->
+    <script src="https://cdn.socket.io/4.7.2/socket.io.min.js"></script>
 </head>
 <body>
+    <!-- Toast Container -->
+    <div id="toast-container" class="toast-container"></div>
+    
     <div class="container">
         <!-- Header -->
         <header class="header">
             <div class="header-content">
                 <h1>Predictive Infrastructure Intelligence</h1>
-                <div class="status-badge">
-                    <span class="status-indicator active"></span>
-                    <span class="status-text">Monitoring Active</span>
+                <div class="header-controls">
+                    <button id="theme-toggle" class="theme-toggle" title="Toggle dark mode">
+                        <span class="theme-icon">🌙</span>
+                    </button>
+                    <div class="status-badge">
+                        <span class="status-indicator active" id="status-indicator"></span>
+                        <span class="status-text" id="status-text">Monitoring Active</span>
+                    </div>
                 </div>
             </div>
         </header>
@@ -28,6 +40,18 @@
                     <div class="stat-value" id="nodes-monitored">0</div>
                 </div>
                 <div class="stat-card">
+                    <div class="stat-label">Average Health</div>
+                    <div class="stat-value" id="avg-health-display">100%</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-label">Healthy Nodes</div>
+                    <div class="stat-value success" id="nodes-healthy">0</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-label">Degraded Nodes</div>
+                    <div class="stat-value risk" id="nodes-degraded">0</div>
+                </div>
+                <div class="stat-card">
                     <div class="stat-label">Risks Detected</div>
                     <div class="stat-value risk" id="risks-detected">0</div>
                 </div>
@@ -38,6 +62,68 @@
                 <div class="stat-card">
                     <div class="stat-label">Last Update</div>
                     <div class="stat-value" id="last-update">Just now</div>
+                </div>
+            </section>
+
+            <!-- Cluster Health Score Section -->
+            <section class="analytics-section">
+                <div class="section-header">
+                    <h2>Cluster Analytics</h2>
+                </div>
+                <div class="analytics-grid">
+                    <div class="analytics-card">
+                        <div class="metric-label">Cluster Health Score</div>
+                        <div class="score-display" id="cluster-health">0</div>
+                        <div class="score-bar"><div class="score-fill" id="cluster-health-bar"></div></div>
+                    </div>
+                    <div class="analytics-card">
+                        <div class="metric-label">Average Node Health</div>
+                        <div class="score-display" id="avg-node-health">0</div>
+                        <div class="score-bar"><div class="score-fill" id="avg-health-bar"></div></div>
+                    </div>
+                    <div class="analytics-card">
+                        <div class="metric-label">Nodes at Risk</div>
+                        <div class="score-display risk-text" id="nodes-at-risk">0</div>
+                        <p class="metric-sublabel">Critical risk nodes</p>
+                    </div>
+                    <div class="analytics-card">
+                        <div class="metric-label">Trend</div>
+                        <div class="score-display" id="cluster-trend">Stable</div>
+                        <p class="metric-sublabel">System stability</p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Charts Section -->
+            <section class="charts-section">
+                <div class="section-header">
+                    <h2>Real-Time Metrics</h2>
+                    <div class="chart-controls">
+                        <select id="chart-timeframe" class="chart-select">
+                            <option value="30">Last 30 min</option>
+                            <option value="60" selected>Last 1 hour</option>
+                            <option value="180">Last 3 hours</option>
+                            <option value="360">Last 6 hours</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="charts-grid">
+                    <div class="chart-card">
+                        <h3>Cluster Health Trend</h3>
+                        <canvas id="health-chart"></canvas>
+                    </div>
+                    <div class="chart-card">
+                        <h3>Node Resource Usage</h3>
+                        <canvas id="resource-chart"></canvas>
+                    </div>
+                    <div class="chart-card">
+                        <h3>Risk Score Distribution</h3>
+                        <canvas id="risk-chart"></canvas>
+                    </div>
+                    <div class="chart-card">
+                        <h3>Event Timeline</h3>
+                        <canvas id="events-chart"></canvas>
+                    </div>
                 </div>
             </section>
 

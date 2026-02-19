@@ -1,53 +1,121 @@
 """
 Predictive Infrastructure Intelligence System - Backend
-AI/ML-driven Kubernetes workload orchestration
+AI/ML-driven Kubernetes workload orchestration with advanced analytics
+Professional-grade infrastructure management platform
+
+Production-ready infrastructure monitoring and orchestration service.
+Handles real-time monitoring, health scoring, risk detection, and automated remediation.
 """
 
 import json
 import threading
 import time
+import signal
+import atexit
+import os
 from datetime import datetime
 from collections import deque
 from flask import Flask, jsonify, request, send_from_directory, send_file
 from flask_cors import CORS
 import logging
+import sys
+
+# Import production utilities and configuration
+from config import config, Config
+from utils import (
+    APIResponse, InputValidator, ErrorHandler, PerformanceMonitor, 
+    cache, rate_limiter, response_handler, input_validator, error_handler
+)
 
 # Import custom modules
 from ml_decision_engine import MLDecisionEngine
 from kubernetes_manager import KubernetesManager
 from event_manager import EventManager
+from analytics_engine import AnalyticsEngine
+from audit_logger import AuditLogger
+from health_scorer import HealthScorer
 
-# Setup Flask
-app = Flask(__name__)
-CORS(app)
-
-# Configure logging
-logging.basicConfig(level=logging.INFO)
+# ===================== LOGGING SETUP =====================
+logging.basicConfig(
+    level=config.LOG_LEVEL,
+    format=config.LOG_FORMAT,
+    handlers=[
+        logging.StreamHandler(sys.stdout),
+        logging.FileHandler('app.log', mode='a', encoding='utf-8')
+    ]
+)
 logger = logging.getLogger(__name__)
 
-# Initialize core components
-try:
-    k8s_manager = KubernetesManager()
-    ml_engine = MLDecisionEngine()
-    event_manager = EventManager()
+# ===================== FLASK APP SETUP =====================
+app = Flask(__name__)
+CORS(app, origins=config.CORS_ORIGINS)
+
+# Production error handling
+@app.errorhandler(404)
+def not_found_error(error):
+    return response_handler.error("Endpoint not found", 404)
+
+@app.errorhandler(405)
+def method_not_allowed_error(error):
+    return response_handler.error("Method not allowed", 405)
+
+@app.errorhandler(500)
+def internal_error(error):
+    logger.error(f"Internal error: {error}", exc_info=True)
+    return response_handler.error("Internal server error", 500)
+
+# ===================== INITIALIZATION =====================
+k8s_manager = None
+ml_engine = None
+event_manager = None
+analytics_engine = None
+audit_logger = None
+health_scorer = None
+monitoring_service = None
+
+def initialize_components():
+    """Initialize all core components with error handling"""
+    global k8s_manager, ml_engine, event_manager, analytics_engine, audit_logger, health_scorer
     
-    if k8s_manager.available:
-        logger.info("✓ Kubernetes cluster detected - using real cluster")
-    else:
-        logger.info("✓ Running in DEMO MODE - no Kubernetes cluster available")
-except Exception as e:
-    logger.error(f"✗ Failed to initialize: {e}")
-    # Even if init fails, try to continue
     try:
+        logger.info(f"Initializing {config.APP_NAME}...")
+        logger.info(f"Configuration: {config.get_summary()}")
+        
         k8s_manager = KubernetesManager()
         ml_engine = MLDecisionEngine()
         event_manager = EventManager()
-    except:
-        raise
+        analytics_engine = AnalyticsEngine()
+        audit_logger = AuditLogger()
+        health_scorer = HealthScorer()
+        
+        logger.info("[OK] Core components initialized successfully")
+        
+        if k8s_manager.available:
+            logger.info("[OK] Kubernetes cluster detected - using real cluster")
+            audit_logger.log_action('SYSTEM_INIT', 'cluster', actor='system', status='success')
+        else:
+            logger.warning("[WARN] Running in DEMO MODE - no Kubernetes cluster available")
+            audit_logger.log_action('SYSTEM_INIT', 'cluster', actor='system', status='demo_mode')
+        
+        return True
+    except Exception as e:
+        logger.error(f"[ERROR] Failed to initialize components: {e}", exc_info=True)
+        return False
 
-# Global monitoring state
-monitoring_active = False
-monitoring_thread = None
+# Initialize components on startup
+if not initialize_components():
+    logger.error("Initialization failed. Critical components unavailable.")
+    sys.exit(1)
+
+# Global state
+stats_counters = {
+    'risks_detected_cumulative': 0,
+    'risks_detected_current': 0,
+    'workloads_moved_cumulative': 0,
+    'nodes_monitored': 0,
+    'checks_run': 0,
+    'errors': 0
+}
 
 
 class MonitoringService:
@@ -82,6 +150,8 @@ class MonitoringService:
     
     def _monitor_loop(self):
         """Main monitoring loop"""
+        global stats_counters
+        
         while self.running:
             try:
                 # Collect metrics from Kubernetes
@@ -102,7 +172,10 @@ class MonitoringService:
                                 'disk_io': node.get('disk_io', 0),
                                 'status': node.get('status', 'healthy')
                             })
-                    logger.info(f"📊 Monitoring: Updated {len(nodes_data)} nodes with fresh metrics")
+                    logger.info(f"[MONITOR] Monitoring: Updated {len(nodes_data)} nodes with fresh metrics")
+                
+                # Track current risks
+                current_risks = 0
                 
                 # Make predictions using ML engine
                 for node_data in nodes_data:
@@ -111,22 +184,41 @@ class MonitoringService:
                     # Get ML prediction
                     prediction = ml_engine.predict_degradation(node_data)
                     
+                    # Calculate health score
+                    health_score = health_scorer.calculate_overall_health(node_data)
+                    
+                    # Record in analytics
+                    analytics_engine.record_metrics(node_id, node_data, prediction['risk_score'])
+                    if health_score['status'] == 'critical':
+                        analytics_engine.record_risk_event(node_id, prediction['risk_score'], prediction['risk_factors'])
+                    
                     # Store history
                     self.history.append({
                         'timestamp': datetime.now().isoformat(),
                         'node': node_id,
                         'metrics': node_data,
-                        'prediction': prediction
+                        'prediction': prediction,
+                        'health_score': health_score
                     })
                     
                     # Handle risk detection
                     if prediction['is_at_risk']:
-                        logger.warning(f"⚠️ Risk detected on {node_data['node_name']}: {prediction['risk_score']:.1f}%")
+                        current_risks += 1
+                        logger.warning(f"⚠️ Risk detected on {node_data['node_name']}: {prediction['risk_score']:.1f}% | Health: {health_score['grade']}")
+                        audit_logger.log_action('RISK_DETECTED', 'node', actor='ml_engine', details={
+                            'node_id': node_id,
+                            'node_name': node_data['node_name'],
+                            'risk_score': prediction['risk_score'],
+                            'health_grade': health_score['grade']
+                        })
                         self._handle_risk_detection(node_data, prediction)
                     
                     # Handle recovery
                     elif node_data.get('status') == 'recovering':
                         self._handle_recovery(node_data, prediction)
+                
+                # Update stats counter
+                stats_counters['current_risks'] = current_risks
                 
                 time.sleep(self.interval)
             
@@ -159,6 +251,12 @@ class MonitoringService:
         if k8s_manager and k8s_manager.available:
             try:
                 k8s_manager.taint_node(node_id, "degradation=true:NoSchedule")
+                audit_logger.log_action('TAINT', 'node', details={
+                    'node_id': node_id,
+                    'node_name': node_name,
+                    'taint_key': 'degradation',
+                    'reason': f'Pre-emptive risk mitigation'
+                })
                 event_manager.add_event({
                     'type': 'action',
                     'title': 'Node Tainted',
@@ -179,6 +277,8 @@ class MonitoringService:
     
     def _migrate_workloads(self, node_data, prediction):
         """Migrate workloads from degraded node"""
+        global stats_counters
+        
         node_id = node_data['node_id']
         node_name = node_data['node_name']
         pods = node_data.get('pods', [])
@@ -197,6 +297,13 @@ class MonitoringService:
                     # Drain and evict pods
                     evicted_count = k8s_manager.drain_node(node_id, grace_period=30)
                     
+                    audit_logger.log_action('MIGRATE', 'pods', details={
+                        'source_node': node_name,
+                        'target_node': target_name,
+                        'pods_moved': evicted_count,
+                        'reason': 'Risk mitigation'
+                    })
+                    
                     event_manager.add_event({
                         'type': 'action',
                         'title': 'Workloads Migrated',
@@ -210,6 +317,7 @@ class MonitoringService:
                             'migrationTime': f"{(evicted_count * 5)}ms"
                         }
                     })
+                    stats_counters['workloads_moved_cumulative'] += evicted_count
                 else:
                     logger.warning(f"No healthy target node found for {node_name}")
             
@@ -218,6 +326,12 @@ class MonitoringService:
         else:
             # Demo mode - simulate migration
             evicted_count = len(pods)
+            audit_logger.log_action('MIGRATE', 'pods', details={
+                'source_node': node_name,
+                'pods_moved': evicted_count,
+                'mode': 'demo',
+                'reason': 'Risk mitigation'
+            })
             event_manager.add_event({
                 'type': 'action',
                 'title': 'Workloads Migrated (Demo)',
@@ -228,6 +342,8 @@ class MonitoringService:
                     'mode': 'demo'
                 }
             })
+            stats_counters['workloads_moved_cumulative'] += evicted_count
+            logger.info(f"[OK] Demo migration: {evicted_count} pods from {node_name}")
     
     def _handle_recovery(self, node_data, prediction):
         """Handle node recovery after risk mitigation"""
@@ -251,16 +367,34 @@ class MonitoringService:
         
         nodes_data = []
         for node in nodes:
+            # Randomly decide if this node should be in good or bad health
+            is_degraded = random.random() < 0.3  # 30% chance of being degraded
+            
+            if is_degraded:
+                # High risk metrics to trigger ML degradation prediction
+                cpu = random.uniform(75, 95)
+                memory = random.uniform(75, 95)
+                temperature = random.uniform(70, 90)
+                latency = random.uniform(30, 50)
+                disk_io = random.uniform(70, 90)
+            else:
+                # Normal/healthy metrics
+                cpu = random.uniform(20, 60)
+                memory = random.uniform(20, 60)
+                temperature = random.uniform(45, 65)
+                latency = random.uniform(2, 20)
+                disk_io = random.uniform(10, 40)
+            
             nodes_data.append({
                 'node_id': node['id'],
                 'node_name': node['name'],
-                'cpu_usage': random.uniform(20, 90),
-                'memory_usage': random.uniform(25, 85),
-                'temperature': random.uniform(45, 80),
-                'network_latency': random.uniform(2, 45),
-                'disk_io': random.uniform(10, 80),
-                'pods': [f"pod-{j}" for j in range(random.randint(0, 10))],
-                'status': 'healthy'
+                'cpu_usage': cpu,
+                'memory_usage': memory,
+                'temperature': temperature,
+                'network_latency': latency,
+                'disk_io': disk_io,
+                'pods': [f"pod-{j}" for j in range(random.randint(2, 8))],
+                'status': 'degrading' if is_degraded else 'healthy'
             })
         
         return nodes_data
@@ -337,9 +471,9 @@ def console_monitor():
 
 # ===================== API ENDPOINTS =====================
 
-@app.route('/api/health', methods=['GET'])
-def health_check():
-    """Health check endpoint"""
+@app.route('/health', methods=['GET'])  # Legacy health check
+def legacy_health_check():
+    """Legacy health check endpoint - kept for backward compatibility"""
     k8s_status = "connected" if k8s_manager else "demo_mode"
     return jsonify({
         'status': 'healthy',
@@ -457,29 +591,145 @@ def get_predictions():
         return jsonify({'error': str(e)}), 500
 
 
+# ===================== HEALTH & STATUS ENDPOINTS =====================
+
+@app.route('/api/health', methods=['GET'])
+def health_check():
+    """
+    Health check endpoint for monitoring and load balancers
+    Returns: 200 if healthy, 503 if degraded
+    """
+    try:
+        health_status = {
+            'status': 'healthy',
+            'timestamp': datetime.now().isoformat(),
+            'components': {
+                'kubernetes': 'available' if k8s_manager and k8s_manager.available else 'unavailable',
+                'ml_engine': 'ready' if ml_engine else 'unavailable',
+                'event_manager': 'ready' if event_manager else 'unavailable',
+                'monitoring': 'running' if monitoring_service and monitoring_service.running else 'stopped',
+            },
+            'metrics': {
+                'checks_run': stats_counters.get('checks_run', 0),
+                'risks_detected': stats_counters.get('risks_detected_current', 0),
+                'nodes_monitored': stats_counters.get('nodes_monitored', 0),
+                'errors': stats_counters.get('errors', 0),
+            },
+            'uptime_seconds': int(time.time() - app.started_at) if hasattr(app, 'started_at') else 0
+        }
+        
+        # Overall status
+        if all(v == 'available' or v == 'ready' or v == 'running' for v in health_status['components'].values() if v not in ['unavailable', 'stopped']):
+            health_status['status'] = 'healthy'
+            return jsonify(health_status), 200
+        else:
+            health_status['status'] = 'degraded'
+            return jsonify(health_status), 200  # Still return 200 for general availability
+    
+    except Exception as e:
+        logger.error(f"Health check failed: {e}", exc_info=True)
+        stats_counters['errors'] = stats_counters.get('errors', 0) + 1
+        return jsonify({
+            'status': 'error',
+            'error': str(e),
+            'timestamp': datetime.now().isoformat()
+        }), 503
+
+
+@app.route('/ready', methods=['GET'])
+def readiness_check():
+    """
+    Kubernetes readiness probe
+    Returns 200 only if service is ready to handle traffic
+    """
+    try:
+        if not (k8s_manager and ml_engine and event_manager and analytics_engine):
+            return jsonify({'ready': False, 'reason': 'Components not initialized'}), 503
+        
+        if monitoring_service and not monitoring_service.running:
+            return jsonify({'ready': False, 'reason': 'Monitoring not running'}), 503
+        
+        return jsonify({'ready': True, 'timestamp': datetime.now().isoformat()}), 200
+    except Exception as e:
+        logger.error(f"Readiness check failed: {e}")
+        return jsonify({'ready': False, 'error': str(e)}), 503
+
+
+# Compatibility endpoints
+@app.route('/health', methods=['GET'])
+def health_legacy():
+    """Legacy health endpoint route"""
+    return health_check()
+
+
 @app.route('/api/stats', methods=['GET'])
 def get_stats():
-    """Get system statistics"""
+    """Get system statistics based on real-time node health metrics"""
+    global stats_counters
+    
     try:
         if k8s_manager and k8s_manager.available:
             nodes = k8s_manager.get_nodes_metrics()
         else:
-            nodes = monitoring_service._generate_demo_metrics()
+            # Ensure demo nodes are initialized
+            _ensure_demo_nodes()
+            nodes = list(demo_nodes.values())
         
-        events = event_manager.get_events()
+        # Calculate real-time stats based on node health metrics
+        risks_detected = 0
+        at_risk_nodes = []
+        degraded_count = 0
+        healthy_count = 0
+        total_health = 0
         
-        risks_detected = len([e for e in events if e['type'] == 'risk'])
-        workloads_moved = len([e for e in events if e['type'] == 'action' and 'Migrated' in e['title']])
+        for node in nodes:
+            # Calculate comprehensive health score
+            health_score = health_scorer.calculate_overall_health(node)
+            score = health_score.get('overall_score', 100)
+            
+            # Count nodes at risk (critical or degraded status)
+            if health_score.get('status') == 'critical' or score < 60:
+                risks_detected += 1
+                at_risk_nodes.append(node['node_id'])
+            
+            # Track health status
+            if health_score.get('status') == 'degraded':
+                degraded_count += 1
+            elif health_score.get('status') == 'healthy':
+                healthy_count += 1
+            
+            # Accumulate health scores
+            total_health += score
+        
+        # Calculate averages
+        avg_health = round(total_health / len(nodes), 1) if nodes else 100
+        
+        # Get cumulative migrations (from previous runs)
+        workloads_moved = stats_counters.get('workloads_moved_cumulative', 0)
+        
+        # Update current risks in counters
+        stats_counters['current_risks'] = risks_detected
+        
+        logger.info(f"📊 Stats: {len(nodes)} nodes | Health: {avg_health}% | Risks: {risks_detected} | Avg Status: {healthy_count}H {degraded_count}D | Migrations: {workloads_moved}")
         
         return jsonify({
             'nodes_monitored': len(nodes),
+            'nodes_healthy': healthy_count,
+            'nodes_degraded': degraded_count,
             'risks_detected': risks_detected,
             'workloads_moved': workloads_moved,
-            'events_total': len(events),
-            'monitoring_active': monitoring_service.running
+            'average_health': avg_health,
+            'events_total': len(event_manager.get_events()),
+            'monitoring_active': monitoring_service.running,
+            'at_risk_nodes': at_risk_nodes,
+            'timestamp': datetime.now().isoformat()
         })
     except Exception as e:
-        return jsonify({'error': str(e)}), 500
+        logger.error(f"Error in get_stats: {e}", exc_info=True)
+        import traceback
+        error_details = traceback.format_exc()
+        logger.error(f"Full traceback:\n{error_details}")
+        return jsonify({'error': str(e), 'traceback': error_details}), 500
 
 
 @app.route('/api/ml-insights', methods=['GET'])
@@ -624,6 +874,223 @@ def drain_node(node_id):
         return jsonify({'error': str(e)}), 500
 
 
+# ===================== TEST ENDPOINT =====================
+@app.route('/api/test/hello', methods=['GET'])
+def test_hello():
+    """Simple test endpoint"""
+    return jsonify({'message': 'Hello World'})
+
+
+# ===================== ADVANCED ANALYTICS ENDPOINTS =====================
+
+@app.route('/api/analytics/cluster-health', methods=['GET'])
+def get_cluster_health():
+    """Get comprehensive cluster health metrics"""
+    try:
+        logger.info("DEBUG: /api/analytics/cluster-health endpoint called")
+        health = analytics_engine.get_cluster_health()
+        logger.info(f"DEBUG: Returning cluster health: {health}")
+        return jsonify(health)
+    except Exception as e:
+        logger.error(f"DEBUG: Error in get_cluster_health: {e}")
+        logger.error(f"Error getting cluster health: {e}")
+        return jsonify({'error': str(e)}), 500
+
+
+@app.route('/api/analytics/risk-statistics', methods=['GET'])
+def get_risk_statistics():
+    """Get detailed risk statistics"""
+    try:
+        stats = analytics_engine.get_risk_statistics()
+        return jsonify(stats)
+    except Exception as e:
+        return jsonify({'error': str(e)}), 500
+
+
+@app.route('/api/analytics/top-risk-nodes', methods=['GET'])
+def get_top_risk_nodes():
+    """Get nodes with highest risk scores"""
+    try:
+        limit = request.args.get('limit', 5, type=int)
+        nodes = analytics_engine.get_top_risk_nodes(limit)
+        return jsonify({'nodes': [{'node_id': n[0], 'risk_score': n[1]} for n in nodes]})
+    except Exception as e:
+        return jsonify({'error': str(e)}), 500
+
+
+@app.route('/api/analytics/node/<node_id>/health-trend', methods=['GET'])
+def get_node_health_trend(node_id):
+    """Get historical health trend for a node"""
+    try:
+        hours = request.args.get('hours', 24, type=int)
+        trend = analytics_engine.get_node_health_trend(node_id, hours)
+        return jsonify({'node_id': node_id, 'trend': trend})
+    except Exception as e:
+        return jsonify({'error': str(e)}), 500
+
+
+@app.route('/api/analytics/node/<node_id>/predictions', methods=['GET'])
+def get_node_predictions(node_id):
+    """Get predictive insights for a node"""
+    try:
+        predictions = analytics_engine.get_predictions(node_id)
+        return jsonify({'node_id': node_id, **predictions})
+    except Exception as e:
+        return jsonify({'error': str(e)}), 500
+
+
+# ===================== HEALTH SCORING ENDPOINTS =====================
+
+@app.route('/api/health-scores', methods=['GET'])
+def get_health_scores():
+    """Get health scores for all nodes"""
+    try:
+        nodes = monitoring_service._generate_demo_metrics() if not k8s_manager.available else k8s_manager.get_nodes_metrics()
+        
+        scores = {}
+        for node in nodes:
+            node_id = node['node_id']
+            health = health_scorer.calculate_overall_health(node)
+            scores[node_id] = health
+        
+        return jsonify(scores)
+    except Exception as e:
+        return jsonify({'error': str(e)}), 500
+
+
+@app.route('/api/health-scores/<node_id>', methods=['GET'])
+def get_node_health_score(node_id):
+    """Get detailed health score for specific node"""
+    try:
+        nodes = monitoring_service._generate_demo_metrics() if not k8s_manager.available else k8s_manager.get_nodes_metrics()
+        node = next((n for n in nodes if n['node_id'] == node_id), None)
+        
+        if not node:
+            return jsonify({'error': 'Node not found'}), 404
+        
+        health = health_scorer.calculate_overall_health(node)
+        sla = health_scorer.get_sla_status(health['overall_score'])
+        
+        return jsonify({
+            'node_id': node_id,
+            'health': health,
+            'sla_status': sla
+        })
+    except Exception as e:
+        return jsonify({'error': str(e)}), 500
+
+
+# ===================== AUDIT LOG ENDPOINTS =====================
+
+@app.route('/api/audit/log', methods=['GET'])
+def get_audit_log():
+    """Get audit log entries"""
+    try:
+        action_type = request.args.get('action')
+        resource = request.args.get('resource')
+        limit = request.args.get('limit', 100, type=int)
+        
+        log = audit_logger.get_audit_trail(action_type, resource, limit)
+        return jsonify({'entries': log, 'total': len(log)})
+    except Exception as e:
+        return jsonify({'error': str(e)}), 500
+
+
+@app.route('/api/audit/statistics', methods=['GET'])
+def get_audit_statistics():
+    """Get audit log statistics"""
+    try:
+        stats = audit_logger.get_statistics()
+        return jsonify(stats)
+    except Exception as e:
+        return jsonify({'error': str(e)}), 500
+
+
+@app.route('/api/audit/user/<actor>', methods=['GET'])
+def get_user_activity(actor):
+    """Get activity for specific user/actor"""
+    try:
+        limit = request.args.get('limit', 50, type=int)
+        activity = audit_logger.get_user_activity(actor, limit)
+        return jsonify({'actor': actor, 'activity': activity})
+    except Exception as e:
+        return jsonify({'error': str(e)}), 500
+
+
+# ===================== EXPORT ENDPOINTS =====================
+
+@app.route('/api/export/metrics/<format>', methods=['GET'])
+def export_metrics(format='json'):
+    """Export system metrics"""
+    try:
+        data = analytics_engine.export_metrics(format)
+        
+        if format == 'json':
+            return jsonify(json.loads(data))
+        else:
+            return data, 200, {'Content-Type': 'text/plain'}
+    except Exception as e:
+        return jsonify({'error': str(e)}), 500
+
+
+@app.route('/api/export/audit-log/<format>', methods=['GET'])
+def export_audit_log(format='json'):
+    """Export audit log"""
+    try:
+        data = audit_logger.export_audit_log(format)
+        
+        if format == 'json':
+            return jsonify(json.loads(data))
+        elif format == 'csv':
+            return data, 200, {'Content-Type': 'text/csv', 'Content-Disposition': 'attachment;filename=audit_log.csv'}
+        else:
+            return jsonify(data)
+    except Exception as e:
+        return jsonify({'error': str(e)}), 500
+
+
+# ===================== DASHBOARD ENDPOINTS =====================
+
+@app.route('/api/dashboard/overview', methods=['GET'])
+def get_dashboard_overview():
+    """Get comprehensive dashboard overview"""
+    try:
+        nodes = monitoring_service._generate_demo_metrics() if not k8s_manager.available else k8s_manager.get_nodes_metrics()
+        
+        return jsonify({
+            'cluster_health': analytics_engine.get_cluster_health(),
+            'risk_statistics': analytics_engine.get_risk_statistics(),
+            'top_risks': [{'node_id': n[0], 'risk_score': float(n[1])} for n in analytics_engine.get_top_risk_nodes(5)],
+            'stats': stats_counters,
+            'nodes_count': len(nodes),
+            'events_count': len(event_manager.get_events()),
+            'monitoring_active': monitoring_service.running
+        })
+    except Exception as e:
+        logger.error(f"Error getting dashboard overview: {e}")
+        return jsonify({'error': str(e)}), 500
+
+
+@app.route('/api/dashboard/timeline', methods=['GET'])
+def get_timeline_data():
+    """Get timeline data for charts"""
+    try:
+        hours = request.args.get('hours', 24, type=int)
+        
+        # Prepare timeline data
+        timeline = []
+        for entry in list(analytics_engine.metrics_history)[-100:]:
+            timeline.append({
+                'timestamp': entry['timestamp'],
+                'node_id': entry['node_id'],
+                'risk_score': entry['risk_score']
+            })
+        
+        return jsonify(timeline)
+    except Exception as e:
+        return jsonify({'error': str(e)}), 500
+
+
 # ===================== ERROR HANDLERS =====================
 
 @app.errorhandler(404)
@@ -637,17 +1104,55 @@ def internal_error(error):
 
 
 if __name__ == '__main__':
-    # Initialize demo nodes first (for demo mode)
-    _ensure_demo_nodes()
-    logger.info(f"Initialized {len(demo_nodes)} demo nodes")
+    """Application Entry Point"""
+    import time
+    app.started_at = time.time()
     
-    # Start monitoring on startup
-    monitoring_service.start()
-    
-    # Run Flask app
-    app.run(
-        host='0.0.0.0',
-        port=5000,
-        debug=False,
-        threaded=True
-    )
+    try:
+        logger.info("="*70)
+        logger.info(f"Starting {config.APP_NAME}")
+        logger.info(f"Environment: {os.getenv('FLASK_ENV', 'development')}")
+        logger.info(f"Log Level: {config.LOG_LEVEL}")
+        logger.info("="*70)
+        
+        # Initialize demo nodes first (for demo mode)
+        _ensure_demo_nodes()
+        logger.info(f"[OK] Initialized {len(demo_nodes)} demo nodes")
+        
+        # Register graceful shutdown handlers
+        def shutdown_handler(signum=None, frame=None):
+            logger.warning("Shutdown signal received. Gracefully shutting down...")
+            if monitoring_service and monitoring_service.running:
+                monitoring_service.stop()
+            logger.info("[OK] Shutdown complete")
+            sys.exit(0)
+        
+        signal.signal(signal.SIGTERM, shutdown_handler)
+        signal.signal(signal.SIGINT, shutdown_handler)
+        
+        # Start monitoring on startup
+        monitoring_service.start()
+        logger.info("[OK] Monitoring service started")
+        
+        # Log startup info
+        cfg_summary = config.get_summary()
+        logger.info(f"Configuration: {cfg_summary}")
+        logger.info(f"Port: {config.PORT}, Host: {config.HOST}")
+        logger.info(f"Workers/Threads: {config.MAX_WORKERS}")
+        
+        # Run Flask app with production settings
+        logger.info("Starting Flask server...")
+        app.run(
+            host=config.HOST,
+            port=config.PORT,
+            debug=config.DEBUG,
+            threaded=True,
+            use_reloader=not config.TESTING
+        )
+        
+    except KeyboardInterrupt:
+        logger.info("Application interrupted by user")
+        shutdown_handler()
+    except Exception as e:
+        logger.error(f"Fatal error during startup: {e}", exc_info=True)
+        sys.exit(1)

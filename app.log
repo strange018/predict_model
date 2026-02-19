@@ -1,0 +1,488 @@
+2026-02-17 19:18:55,845 - __main__ - INFO - Initializing Predictive Infrastructure Intelligence...
+2026-02-17 19:18:55,845 - __main__ - INFO - Configuration: {'app_name': 'Predictive Infrastructure Intelligence', 'debug': True, 'host': '0.0.0.0', 'port': 5000, 'log_level': 'DEBUG', 'monitoring_interval': 3, 'max_history': 1000, 'k8s_namespace': 'default', 'ml_enabled': True, 'auto_remediation': False}
+2026-02-17 19:18:55,846 - kubernetes_manager - WARNING - Kubernetes config not available: Invalid kube-config file. No configuration found.
+2026-02-17 19:18:55,846 - kubernetes_manager - INFO - Will operate in DEMO MODE without real cluster
+2026-02-17 19:18:55,846 - kubernetes_manager - INFO - Kubernetes manager in DEMO MODE
+2026-02-17 19:18:55,996 - audit_logger - INFO - AUDIT: SYSTEM_INIT:cluster by system - demo_mode
+2026-02-17 19:20:02,628 - __main__ - INFO - Initializing Predictive Infrastructure Intelligence...
+2026-02-17 19:20:02,629 - __main__ - INFO - Configuration: {'app_name': 'Predictive Infrastructure Intelligence', 'debug': True, 'host': '0.0.0.0', 'port': 5000, 'log_level': 'DEBUG', 'monitoring_interval': 3, 'max_history': 1000, 'k8s_namespace': 'default', 'ml_enabled': True, 'auto_remediation': False}
+2026-02-17 19:20:02,629 - kubernetes_manager - WARNING - Kubernetes config not available: Invalid kube-config file. No configuration found.
+2026-02-17 19:20:02,629 - kubernetes_manager - INFO - Will operate in DEMO MODE without real cluster
+2026-02-17 19:20:02,629 - kubernetes_manager - INFO - Kubernetes manager in DEMO MODE
+2026-02-17 19:20:02,688 - audit_logger - INFO - AUDIT: SYSTEM_INIT:cluster by system - demo_mode
+2026-02-17 19:24:21,778 - __main__ - INFO - Initializing Predictive Infrastructure Intelligence...
+2026-02-17 19:24:21,779 - __main__ - INFO - Configuration: {'app_name': 'Predictive Infrastructure Intelligence', 'debug': True, 'host': '0.0.0.0', 'port': 5000, 'log_level': 'DEBUG', 'monitoring_interval': 3, 'max_history': 1000, 'k8s_namespace': 'default', 'ml_enabled': True, 'auto_remediation': False}
+2026-02-17 19:24:21,779 - kubernetes_manager - WARNING - Kubernetes config not available: Invalid kube-config file. No configuration found.
+2026-02-17 19:24:21,779 - kubernetes_manager - INFO - Will operate in DEMO MODE without real cluster
+2026-02-17 19:24:21,780 - kubernetes_manager - INFO - Kubernetes manager in DEMO MODE
+2026-02-17 19:24:21,830 - audit_logger - INFO - AUDIT: SYSTEM_INIT:cluster by system - demo_mode
+2026-02-19 15:52:20,655 - app - INFO - Initializing Predictive Infrastructure Intelligence...
+...
+2026-02-19 15:52:20,673 - app - INFO - Configuration: {'app_name': 'Predictive Infrastructure Intelligence', 'debug': True, 'host': '0.0.0.0', 'port': 5000, 'log_level': 'DEBUG', 'monitoring_interval': 3, 'max_history': 1000, 'k8s_namespace': 'default', 'ml_enabled': True, 'auto_remediation': False}
+2026-02-19 15:52:20,673 - __main__ - INFO - Configuration: {'app_name': 'Predictive Infrastructure Intelligence', 'debug': True, 'host': '0.0.0.0', 'port': 5000, 'log_level': 'DEBUG', 'monitoring_interval': 3, 'max_history': 1000, 'k8s_namespace': 'default', 'ml_enabled': True, 'auto_remediation': False}
+2026-02-19 15:52:20,674 - kubernetes_manager - WARNING - Kubernetes config not available: Invalid kube-config file. No configuration found.
+2026-02-19 15:52:20,673 - kubernetes_manager - WARNING - Kubernetes config not available: Invalid kube-config file. No configuration found.
+2026-02-19 15:52:20,674 - kubernetes_manager - INFO - Kubernetes manager in DEMO MODE
+2026-02-19 15:52:20,674 - kubernetes_manager - INFO - Will operate in DEMO MODE without real cluster
+2026-02-19 15:52:20,674 - kubernetes_manager - INFO - Kubernetes manager in DEMO MODE
+2026-02-19 15:52:20,696 - ml_decision_engine - INFO - ✓ ML model trained on synthetic data
+2026-02-19 15:52:20,695 - ml_decision_engine - INFO - ✓ ML model trained on synthetic data
+2026-02-19 15:52:20,724 - ml_decision_engine - INFO - ✓ ML Decision Engine initialized
+2026-02-19 15:52:20,725 - __main__ - INFO - ✓ Core components initialized successfully
+2026-02-19 15:52:20,724 - ml_decision_engine - INFO - ✓ ML Decision Engine initialized
+2026-02-19 15:52:20,725 - __main__ - WARNING - ⚠️ Running in DEMO MODE - no Kubernetes cluster available
+2026-02-19 15:52:20,726 - audit_logger - INFO - AUDIT: SYSTEM_INIT:cluster by system - demo_mode
+2026-02-19 15:52:20,725 - app - INFO - ✓ Core components initialized successfully
+2026-02-19 15:52:20,727 - app - WARNING - ⚠️ Running in DEMO MODE - no Kubernetes cluster available
+2026-02-19 15:52:20,728 - audit_logger - INFO - AUDIT: SYSTEM_INIT:cluster by system - demo_mode
+2026-02-19 15:52:20,741 - __main__ - INFO - ======================================================================
+2026-02-19 15:52:20,742 - __main__ - INFO - Starting Predictive Infrastructure Intelligence
+2026-02-19 15:52:20,742 - __main__ - INFO - Environment: development
+2026-02-19 15:52:20,742 - __main__ - INFO - Log Level: DEBUG
+2026-02-19 15:52:20,742 - __main__ - INFO - ======================================================================
+2026-02-19 15:52:20,743 - __main__ - INFO - ✓ Initialized 5 demo nodes
+2026-02-19 15:52:20,745 - __main__ - INFO - 📊 Monitoring: Updated 5 nodes with fresh metrics
+2026-02-19 15:52:20,745 - __main__ - INFO - Monitoring service started
+2026-02-19 15:52:20,769 - event_manager - INFO - 📝 Event: INFO - Monitoring Service Started
+2026-02-19 15:52:20,771 - __main__ - INFO - ✓ Monitoring service started
+2026-02-19 15:52:20,772 - __main__ - INFO - Configuration: {'app_name': 'Predictive Infrastructure Intelligence', 'debug': True, 'host': '0.0.0.0', 'port': 5000, 'log_level': 'DEBUG', 'monitoring_interval': 3, 'max_history': 1000, 'k8s_namespace': 'default', 'ml_enabled': True, 'auto_remediation': False}
+2026-02-19 15:52:20,772 - __main__ - INFO - Port: 5000, Host: 0.0.0.0
+2026-02-19 15:52:20,772 - __main__ - INFO - Workers/Threads: 4
+2026-02-19 15:52:20,772 - __main__ - INFO - Starting Flask server...
+2026-02-19 15:52:20,876 - werkzeug - INFO - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:5000
+ * Running on http://192.168.1.39:5000
+2026-02-19 15:52:20,876 - werkzeug - INFO - [33mPress CTRL+C to quit[0m
+2026-02-19 15:52:20,885 - werkzeug - INFO -  * Restarting with stat
+2026-02-19 15:52:22,767 - __main__ - INFO - Initializing Predictive Infrastructure Intelligence...
+2026-02-19 15:52:22,768 - __main__ - INFO - Configuration: {'app_name': 'Predictive Infrastructure Intelligence', 'debug': True, 'host': '0.0.0.0', 'port': 5000, 'log_level': 'DEBUG', 'monitoring_interval': 3, 'max_history': 1000, 'k8s_namespace': 'default', 'ml_enabled': True, 'auto_remediation': True}
+2026-02-19 15:52:22,768 - kubernetes_manager - WARNING - Kubernetes config not available: Invalid kube-config file. No configuration found.
+2026-02-19 15:52:22,768 - kubernetes_manager - INFO - Will operate in DEMO MODE without real cluster
+2026-02-19 15:52:22,768 - kubernetes_manager - INFO - Kubernetes manager in DEMO MODE
+2026-02-19 15:52:22,786 - ml_decision_engine - INFO - ✓ ML model trained on synthetic data
+2026-02-19 15:52:22,788 - ml_decision_engine - INFO - ✓ ML Decision Engine initialized
+2026-02-19 15:52:22,788 - __main__ - INFO - ✓ Core components initialized successfully
+2026-02-19 15:52:22,789 - __main__ - WARNING - ⚠️ Running in DEMO MODE - no Kubernetes cluster available
+2026-02-19 15:52:22,789 - audit_logger - INFO - AUDIT: SYSTEM_INIT:cluster by system - demo_mode
+2026-02-19 15:52:22,796 - __main__ - INFO - ======================================================================
+2026-02-19 15:52:22,796 - __main__ - INFO - Starting Predictive Infrastructure Intelligence
+2026-02-19 15:52:22,796 - __main__ - INFO - Environment: development
+2026-02-19 15:52:22,796 - __main__ - INFO - Log Level: DEBUG
+2026-02-19 15:52:22,796 - __main__ - INFO - ======================================================================
+2026-02-19 15:52:22,797 - __main__ - INFO - ✓ Initialized 5 demo nodes
+2026-02-19 15:52:22,798 - __main__ - INFO - 📊 Monitoring: Updated 5 nodes with fresh metrics
+2026-02-19 15:52:22,798 - __main__ - INFO - Monitoring service started
+2026-02-19 15:52:22,800 - event_manager - INFO - 📝 Event: INFO - Monitoring Service Started
+2026-02-19 15:52:22,800 - __main__ - INFO - ✓ Monitoring service started
+2026-02-19 15:52:22,801 - __main__ - INFO - Configuration: {'app_name': 'Predictive Infrastructure Intelligence', 'debug': True, 'host': '0.0.0.0', 'port': 5000, 'log_level': 'DEBUG', 'monitoring_interval': 3, 'max_history': 1000, 'k8s_namespace': 'default', 'ml_enabled': True, 'auto_remediation': True}
+2026-02-19 15:52:22,801 - __main__ - INFO - Port: 5000, Host: 0.0.0.0
+2026-02-19 15:52:22,801 - __main__ - INFO - Workers/Threads: 4
+2026-02-19 15:52:22,801 - __main__ - INFO - Starting Flask server...
+2026-02-19 15:52:22,812 - werkzeug - WARNING -  * Debugger is active!
+2026-02-19 15:52:22,814 - werkzeug - INFO -  * Debugger PIN: 544-885-708
+2026-02-19 15:52:25,800 - __main__ - INFO - 📊 Monitoring: Updated 5 nodes with fresh metrics
+2026-02-19 15:52:28,803 - __main__ - INFO - 📊 Monitoring: Updated 5 nodes with fresh metrics
+2026-02-19 15:52:31,807 - __main__ - INFO - 📊 Monitoring: Updated 5 nodes with fresh metrics
+2026-02-19 15:52:34,809 - __main__ - INFO - 📊 Monitoring: Updated 5 nodes with fresh metrics
+2026-02-19 15:52:37,811 - __main__ - INFO - 📊 Monitoring: Updated 5 nodes with fresh metrics
+2026-02-19 15:52:40,814 - __main__ - INFO - 📊 Monitoring: Updated 5 nodes with fresh metrics
+2026-02-19 15:52:43,817 - __main__ - INFO - 📊 Monitoring: Updated 5 nodes with fresh metrics
+2026-02-19 15:52:46,820 - __main__ - INFO - 📊 Monitoring: Updated 5 nodes with fresh metrics
+2026-02-19 15:52:49,823 - __main__ - INFO - 📊 Monitoring: Updated 5 nodes with fresh metrics
+2026-02-19 15:52:51,877 - werkzeug - INFO -  * Detected change in 'C:\\Users\\HP\\OneDrive\\Desktop\\hackathon project\\ml_decision_engine.py', reloading
+2026-02-19 15:53:13,119 - __main__ - INFO - Initializing Predictive Infrastructure Intelligence...
+2026-02-19 15:53:13,120 - __main__ - INFO - Configuration: {'app_name': 'Predictive Infrastructure Intelligence', 'debug': True, 'host': '0.0.0.0', 'port': 5000, 'log_level': 'DEBUG', 'monitoring_interval': 3, 'max_history': 1000, 'k8s_namespace': 'default', 'ml_enabled': True, 'auto_remediation': False}
+2026-02-19 15:53:13,120 - kubernetes_manager - WARNING - Kubernetes config not available: Invalid kube-config file. No configuration found.
+2026-02-19 15:53:13,120 - kubernetes_manager - INFO - Will operate in DEMO MODE without real cluster
+2026-02-19 15:53:13,120 - kubernetes_manager - INFO - Kubernetes manager in DEMO MODE
+2026-02-19 15:53:13,139 - ml_decision_engine - INFO - [OK] ML model trained on synthetic data
+2026-02-19 15:53:13,139 - ml_decision_engine - INFO - [OK] ML Decision Engine initialized
+2026-02-19 15:53:13,139 - __main__ - INFO - [OK] Core components initialized successfully
+2026-02-19 15:53:13,139 - __main__ - WARNING - [WARN] Running in DEMO MODE - no Kubernetes cluster available
+2026-02-19 15:53:13,139 - audit_logger - INFO - AUDIT: SYSTEM_INIT:cluster by system - demo_mode
+2026-02-19 15:53:13,147 - __main__ - INFO - ======================================================================
+2026-02-19 15:53:13,148 - __main__ - INFO - Starting Predictive Infrastructure Intelligence
+2026-02-19 15:53:13,148 - __main__ - INFO - Environment: development
+2026-02-19 15:53:13,148 - __main__ - INFO - Log Level: DEBUG
+2026-02-19 15:53:13,148 - __main__ - INFO - ======================================================================
+2026-02-19 15:53:13,148 - __main__ - INFO - [OK] Initialized 5 demo nodes
+2026-02-19 15:53:13,149 - __main__ - INFO - 📊 Monitoring: Updated 5 nodes with fresh metrics
+2026-02-19 15:53:13,149 - __main__ - INFO - Monitoring service started
+2026-02-19 15:53:13,155 - event_manager - INFO - 📝 Event: INFO - Monitoring Service Started
+2026-02-19 15:53:13,156 - __main__ - INFO - ✓ Monitoring service started
+2026-02-19 15:53:13,157 - __main__ - INFO - Configuration: {'app_name': 'Predictive Infrastructure Intelligence', 'debug': True, 'host': '0.0.0.0', 'port': 5000, 'log_level': 'DEBUG', 'monitoring_interval': 3, 'max_history': 1000, 'k8s_namespace': 'default', 'ml_enabled': True, 'auto_remediation': False}
+2026-02-19 15:53:13,157 - __main__ - INFO - Port: 5000, Host: 0.0.0.0
+2026-02-19 15:53:13,157 - __main__ - INFO - Workers/Threads: 4
+2026-02-19 15:53:13,157 - __main__ - INFO - Starting Flask server...
+2026-02-19 15:53:13,185 - werkzeug - INFO - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:5000
+ * Running on http://192.168.1.39:5000
+2026-02-19 15:53:13,186 - werkzeug - INFO - [33mPress CTRL+C to quit[0m
+2026-02-19 15:53:13,186 - werkzeug - INFO -  * Restarting with stat
+2026-02-19 15:53:14,956 - __main__ - INFO - Initializing Predictive Infrastructure Intelligence...
+2026-02-19 15:53:14,956 - __main__ - INFO - Configuration: {'app_name': 'Predictive Infrastructure Intelligence', 'debug': True, 'host': '0.0.0.0', 'port': 5000, 'log_level': 'DEBUG', 'monitoring_interval': 3, 'max_history': 1000, 'k8s_namespace': 'default', 'ml_enabled': True, 'auto_remediation': True}
+2026-02-19 15:53:14,956 - kubernetes_manager - WARNING - Kubernetes config not available: Invalid kube-config file. No configuration found.
+2026-02-19 15:53:14,956 - kubernetes_manager - INFO - Will operate in DEMO MODE without real cluster
+2026-02-19 15:53:14,956 - kubernetes_manager - INFO - Kubernetes manager in DEMO MODE
+2026-02-19 15:53:14,979 - ml_decision_engine - INFO - [OK] ML model trained on synthetic data
+2026-02-19 15:53:14,979 - ml_decision_engine - INFO - [OK] ML Decision Engine initialized
+2026-02-19 15:53:14,980 - __main__ - INFO - [OK] Core components initialized successfully
+2026-02-19 15:53:14,980 - __main__ - WARNING - [WARN] Running in DEMO MODE - no Kubernetes cluster available
+2026-02-19 15:53:14,980 - audit_logger - INFO - AUDIT: SYSTEM_INIT:cluster by system - demo_mode
+2026-02-19 15:53:14,989 - __main__ - INFO - ======================================================================
+2026-02-19 15:53:14,989 - __main__ - INFO - Starting Predictive Infrastructure Intelligence
+2026-02-19 15:53:14,989 - __main__ - INFO - Environment: development
+2026-02-19 15:53:14,989 - __main__ - INFO - Log Level: DEBUG
+2026-02-19 15:53:14,989 - __main__ - INFO - ======================================================================
+2026-02-19 15:53:14,989 - __main__ - INFO - [OK] Initialized 5 demo nodes
+2026-02-19 15:53:14,990 - __main__ - INFO - 📊 Monitoring: Updated 5 nodes with fresh metrics
+2026-02-19 15:53:14,990 - __main__ - INFO - Monitoring service started
+2026-02-19 15:53:14,995 - event_manager - INFO - 📝 Event: INFO - Monitoring Service Started
+2026-02-19 15:53:14,996 - __main__ - INFO - ✓ Monitoring service started
+2026-02-19 15:53:14,997 - __main__ - INFO - Configuration: {'app_name': 'Predictive Infrastructure Intelligence', 'debug': True, 'host': '0.0.0.0', 'port': 5000, 'log_level': 'DEBUG', 'monitoring_interval': 3, 'max_history': 1000, 'k8s_namespace': 'default', 'ml_enabled': True, 'auto_remediation': True}
+2026-02-19 15:53:14,997 - __main__ - INFO - Port: 5000, Host: 0.0.0.0
+2026-02-19 15:53:14,997 - __main__ - INFO - Workers/Threads: 4
+2026-02-19 15:53:14,997 - __main__ - INFO - Starting Flask server...
+2026-02-19 15:53:15,011 - werkzeug - WARNING -  * Debugger is active!
+2026-02-19 15:53:15,014 - werkzeug - INFO -  * Debugger PIN: 544-885-708
+2026-02-19 15:53:16,155 - __main__ - INFO - 📊 Monitoring: Updated 5 nodes with fresh metrics
+2026-02-19 15:53:17,996 - __main__ - INFO - 📊 Monitoring: Updated 5 nodes with fresh metrics
+2026-02-19 15:53:19,159 - __main__ - INFO - 📊 Monitoring: Updated 5 nodes with fresh metrics
+2026-02-19 15:53:21,002 - __main__ - INFO - 📊 Monitoring: Updated 5 nodes with fresh metrics
+2026-02-19 15:53:24,007 - __main__ - INFO - 📊 Monitoring: Updated 5 nodes with fresh metrics
+2026-02-19 15:53:27,011 - __main__ - INFO - 📊 Monitoring: Updated 5 nodes with fresh metrics
+2026-02-19 15:53:30,014 - __main__ - INFO - 📊 Monitoring: Updated 5 nodes with fresh metrics
+2026-02-19 15:53:33,019 - __main__ - INFO - 📊 Monitoring: Updated 5 nodes with fresh metrics
+2026-02-19 15:53:36,021 - __main__ - INFO - 📊 Monitoring: Updated 5 nodes with fresh metrics
+2026-02-19 15:53:39,025 - __main__ - INFO - 📊 Monitoring: Updated 5 nodes with fresh metrics
+2026-02-19 15:53:42,027 - __main__ - INFO - 📊 Monitoring: Updated 5 nodes with fresh metrics
+2026-02-19 15:53:45,030 - __main__ - INFO - 📊 Monitoring: Updated 5 nodes with fresh metrics
+2026-02-19 15:53:48,035 - __main__ - INFO - 📊 Monitoring: Updated 5 nodes with fresh metrics
+2026-02-19 15:53:51,039 - __main__ - INFO - 📊 Monitoring: Updated 5 nodes with fresh metrics
+2026-02-19 15:53:54,044 - __main__ - INFO - 📊 Monitoring: Updated 5 nodes with fresh metrics
+2026-02-19 15:53:54,376 - werkzeug - INFO -  * Detected change in 'C:\\Users\\HP\\OneDrive\\Desktop\\hackathon project\\app.py', reloading
+2026-02-19 15:54:09,995 - __main__ - INFO - Initializing Predictive Infrastructure Intelligence...
+2026-02-19 15:54:09,995 - __main__ - INFO - Configuration: {'app_name': 'Predictive Infrastructure Intelligence', 'debug': True, 'host': '0.0.0.0', 'port': 5000, 'log_level': 'DEBUG', 'monitoring_interval': 3, 'max_history': 1000, 'k8s_namespace': 'default', 'ml_enabled': True, 'auto_remediation': False}
+2026-02-19 15:54:09,995 - kubernetes_manager - WARNING - Kubernetes config not available: Invalid kube-config file. No configuration found.
+2026-02-19 15:54:09,995 - kubernetes_manager - INFO - Will operate in DEMO MODE without real cluster
+2026-02-19 15:54:09,995 - kubernetes_manager - INFO - Kubernetes manager in DEMO MODE
+2026-02-19 15:54:10,033 - ml_decision_engine - INFO - [OK] ML model trained on synthetic data
+2026-02-19 15:54:10,033 - ml_decision_engine - INFO - [OK] ML Decision Engine initialized
+2026-02-19 15:54:10,033 - __main__ - INFO - [OK] Core components initialized successfully
+2026-02-19 15:54:10,034 - __main__ - WARNING - [WARN] Running in DEMO MODE - no Kubernetes cluster available
+2026-02-19 15:54:10,034 - audit_logger - INFO - AUDIT: SYSTEM_INIT:cluster by system - demo_mode
+2026-02-19 15:54:10,045 - __main__ - INFO - ======================================================================
+2026-02-19 15:54:10,045 - __main__ - INFO - Starting Predictive Infrastructure Intelligence
+2026-02-19 15:54:10,045 - __main__ - INFO - Environment: development
+2026-02-19 15:54:10,045 - __main__ - INFO - Log Level: DEBUG
+2026-02-19 15:54:10,045 - __main__ - INFO - ======================================================================
+2026-02-19 15:54:10,046 - __main__ - INFO - [OK] Initialized 5 demo nodes
+2026-02-19 15:54:10,046 - __main__ - INFO - [MONITOR] Monitoring: Updated 5 nodes with fresh metrics
+2026-02-19 15:54:10,046 - __main__ - INFO - Monitoring service started
+2026-02-19 15:54:10,048 - event_manager - INFO - 📝 Event: INFO - Monitoring Service Started
+2026-02-19 15:54:10,048 - __main__ - INFO - [OK] Monitoring service started
+2026-02-19 15:54:10,048 - __main__ - INFO - Configuration: {'app_name': 'Predictive Infrastructure Intelligence', 'debug': True, 'host': '0.0.0.0', 'port': 5000, 'log_level': 'DEBUG', 'monitoring_interval': 3, 'max_history': 1000, 'k8s_namespace': 'default', 'ml_enabled': True, 'auto_remediation': False}
+2026-02-19 15:54:10,048 - __main__ - INFO - Port: 5000, Host: 0.0.0.0
+2026-02-19 15:54:10,049 - __main__ - INFO - Workers/Threads: 4
+2026-02-19 15:54:10,049 - __main__ - INFO - Starting Flask server...
+2026-02-19 15:54:10,077 - werkzeug - INFO - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:5000
+ * Running on http://192.168.1.39:5000
+2026-02-19 15:54:10,077 - werkzeug - INFO - [33mPress CTRL+C to quit[0m
+2026-02-19 15:54:10,078 - werkzeug - INFO -  * Restarting with stat
+2026-02-19 15:54:11,816 - __main__ - INFO - Initializing Predictive Infrastructure Intelligence...
+2026-02-19 15:54:11,816 - __main__ - INFO - Configuration: {'app_name': 'Predictive Infrastructure Intelligence', 'debug': True, 'host': '0.0.0.0', 'port': 5000, 'log_level': 'DEBUG', 'monitoring_interval': 3, 'max_history': 1000, 'k8s_namespace': 'default', 'ml_enabled': True, 'auto_remediation': True}
+2026-02-19 15:54:11,817 - kubernetes_manager - WARNING - Kubernetes config not available: Invalid kube-config file. No configuration found.
+2026-02-19 15:54:11,817 - kubernetes_manager - INFO - Will operate in DEMO MODE without real cluster
+2026-02-19 15:54:11,817 - kubernetes_manager - INFO - Kubernetes manager in DEMO MODE
+2026-02-19 15:54:11,837 - ml_decision_engine - INFO - [OK] ML model trained on synthetic data
+2026-02-19 15:54:11,838 - ml_decision_engine - INFO - [OK] ML Decision Engine initialized
+2026-02-19 15:54:11,838 - __main__ - INFO - [OK] Core components initialized successfully
+2026-02-19 15:54:11,838 - __main__ - WARNING - [WARN] Running in DEMO MODE - no Kubernetes cluster available
+2026-02-19 15:54:11,838 - audit_logger - INFO - AUDIT: SYSTEM_INIT:cluster by system - demo_mode
+2026-02-19 15:54:11,849 - __main__ - INFO - ======================================================================
+2026-02-19 15:54:11,849 - __main__ - INFO - Starting Predictive Infrastructure Intelligence
+2026-02-19 15:54:11,850 - __main__ - INFO - Environment: development
+2026-02-19 15:54:11,850 - __main__ - INFO - Log Level: DEBUG
+2026-02-19 15:54:11,850 - __main__ - INFO - ======================================================================
+2026-02-19 15:54:11,850 - __main__ - INFO - [OK] Initialized 5 demo nodes
+2026-02-19 15:54:11,851 - __main__ - INFO - [MONITOR] Monitoring: Updated 5 nodes with fresh metrics
+2026-02-19 15:54:11,851 - __main__ - INFO - Monitoring service started
+2026-02-19 15:54:11,854 - event_manager - INFO - 📝 Event: INFO - Monitoring Service Started
+2026-02-19 15:54:11,854 - __main__ - INFO - [OK] Monitoring service started
+2026-02-19 15:54:11,854 - __main__ - INFO - Configuration: {'app_name': 'Predictive Infrastructure Intelligence', 'debug': True, 'host': '0.0.0.0', 'port': 5000, 'log_level': 'DEBUG', 'monitoring_interval': 3, 'max_history': 1000, 'k8s_namespace': 'default', 'ml_enabled': True, 'auto_remediation': True}
+2026-02-19 15:54:11,854 - __main__ - INFO - Port: 5000, Host: 0.0.0.0
+2026-02-19 15:54:11,855 - __main__ - INFO - Workers/Threads: 4
+2026-02-19 15:54:11,855 - __main__ - INFO - Starting Flask server...
+2026-02-19 15:54:11,868 - werkzeug - WARNING -  * Debugger is active!
+2026-02-19 15:54:11,871 - werkzeug - INFO -  * Debugger PIN: 544-885-708
+2026-02-19 15:54:13,048 - __main__ - INFO - [MONITOR] Monitoring: Updated 5 nodes with fresh metrics
+2026-02-19 15:54:14,853 - __main__ - INFO - [MONITOR] Monitoring: Updated 5 nodes with fresh metrics
+2026-02-19 15:54:16,052 - __main__ - INFO - [MONITOR] Monitoring: Updated 5 nodes with fresh metrics
+2026-02-19 15:54:17,856 - __main__ - INFO - [MONITOR] Monitoring: Updated 5 nodes with fresh metrics
+2026-02-19 15:54:19,054 - __main__ - INFO - [MONITOR] Monitoring: Updated 5 nodes with fresh metrics
+2026-02-19 15:54:20,860 - __main__ - INFO - [MONITOR] Monitoring: Updated 5 nodes with fresh metrics
+2026-02-19 15:54:22,057 - __main__ - INFO - [MONITOR] Monitoring: Updated 5 nodes with fresh metrics
+2026-02-19 15:54:23,863 - __main__ - INFO - [MONITOR] Monitoring: Updated 5 nodes with fresh metrics
+2026-02-19 15:54:25,061 - __main__ - INFO - [MONITOR] Monitoring: Updated 5 nodes with fresh metrics
+2026-02-19 15:54:26,866 - __main__ - INFO - [MONITOR] Monitoring: Updated 5 nodes with fresh metrics
+2026-02-19 15:54:28,064 - __main__ - INFO - [MONITOR] Monitoring: Updated 5 nodes with fresh metrics
+2026-02-19 15:54:29,870 - __main__ - INFO - [MONITOR] Monitoring: Updated 5 nodes with fresh metrics
+2026-02-19 15:54:31,067 - __main__ - INFO - [MONITOR] Monitoring: Updated 5 nodes with fresh metrics
+2026-02-19 15:54:32,872 - __main__ - INFO - [MONITOR] Monitoring: Updated 5 nodes with fresh metrics
+2026-02-19 15:54:34,069 - __main__ - INFO - [MONITOR] Monitoring: Updated 5 nodes with fresh metrics
+2026-02-19 15:54:35,874 - __main__ - INFO - [MONITOR] Monitoring: Updated 5 nodes with fresh metrics
+2026-02-19 15:54:37,073 - __main__ - INFO - [MONITOR] Monitoring: Updated 5 nodes with fresh metrics
+2026-02-19 15:54:38,876 - __main__ - INFO - [MONITOR] Monitoring: Updated 5 nodes with fresh metrics
+2026-02-19 15:54:40,076 - __main__ - INFO - [MONITOR] Monitoring: Updated 5 nodes with fresh metrics
+2026-02-19 15:54:41,880 - __main__ - INFO - [MONITOR] Monitoring: Updated 5 nodes with fresh metrics
+2026-02-19 15:54:43,079 - __main__ - INFO - [MONITOR] Monitoring: Updated 5 nodes with fresh metrics
+2026-02-19 15:54:44,883 - __main__ - INFO - [MONITOR] Monitoring: Updated 5 nodes with fresh metrics
+2026-02-19 15:54:46,082 - __main__ - INFO - [MONITOR] Monitoring: Updated 5 nodes with fresh metrics
+2026-02-19 15:54:47,885 - __main__ - INFO - [MONITOR] Monitoring: Updated 5 nodes with fresh metrics
+2026-02-19 15:54:49,085 - __main__ - INFO - [MONITOR] Monitoring: Updated 5 nodes with fresh metrics
+2026-02-19 15:54:50,889 - __main__ - INFO - [MONITOR] Monitoring: Updated 5 nodes with fresh metrics
+2026-02-19 15:54:52,088 - __main__ - INFO - [MONITOR] Monitoring: Updated 5 nodes with fresh metrics
+2026-02-19 15:54:53,893 - __main__ - INFO - [MONITOR] Monitoring: Updated 5 nodes with fresh metrics
+2026-02-19 15:54:55,092 - __main__ - INFO - [MONITOR] Monitoring: Updated 5 nodes with fresh metrics
+2026-02-19 15:54:56,896 - __main__ - INFO - [MONITOR] Monitoring: Updated 5 nodes with fresh metrics
+2026-02-19 15:54:58,096 - __main__ - INFO - [MONITOR] Monitoring: Updated 5 nodes with fresh metrics
+2026-02-19 15:54:59,899 - __main__ - INFO - [MONITOR] Monitoring: Updated 5 nodes with fresh metrics
+2026-02-19 15:55:01,098 - __main__ - INFO - [MONITOR] Monitoring: Updated 5 nodes with fresh metrics
+2026-02-19 15:55:02,902 - __main__ - INFO - [MONITOR] Monitoring: Updated 5 nodes with fresh metrics
+2026-02-19 15:55:04,102 - __main__ - INFO - [MONITOR] Monitoring: Updated 5 nodes with fresh metrics
+2026-02-19 15:55:05,904 - __main__ - INFO - [MONITOR] Monitoring: Updated 5 nodes with fresh metrics
+2026-02-19 15:55:07,107 - __main__ - INFO - [MONITOR] Monitoring: Updated 5 nodes with fresh metrics
+2026-02-19 15:55:08,907 - __main__ - INFO - [MONITOR] Monitoring: Updated 5 nodes with fresh metrics
+2026-02-19 15:55:10,110 - __main__ - INFO - [MONITOR] Monitoring: Updated 5 nodes with fresh metrics
+2026-02-19 15:55:11,909 - __main__ - INFO - [MONITOR] Monitoring: Updated 5 nodes with fresh metrics
+2026-02-19 15:55:13,114 - __main__ - INFO - [MONITOR] Monitoring: Updated 5 nodes with fresh metrics
+2026-02-19 15:55:14,914 - __main__ - INFO - [MONITOR] Monitoring: Updated 5 nodes with fresh metrics
+2026-02-19 15:55:16,118 - __main__ - INFO - [MONITOR] Monitoring: Updated 5 nodes with fresh metrics
+2026-02-19 15:55:17,917 - __main__ - INFO - [MONITOR] Monitoring: Updated 5 nodes with fresh metrics
+2026-02-19 15:55:19,122 - __main__ - INFO - [MONITOR] Monitoring: Updated 5 nodes with fresh metrics
+2026-02-19 15:55:20,922 - __main__ - INFO - [MONITOR] Monitoring: Updated 5 nodes with fresh metrics
+2026-02-19 15:55:22,124 - __main__ - INFO - [MONITOR] Monitoring: Updated 5 nodes with fresh metrics
+2026-02-19 15:55:23,924 - __main__ - INFO - [MONITOR] Monitoring: Updated 5 nodes with fresh metrics
+2026-02-19 15:55:25,127 - __main__ - INFO - [MONITOR] Monitoring: Updated 5 nodes with fresh metrics
+2026-02-19 15:55:26,926 - __main__ - INFO - [MONITOR] Monitoring: Updated 5 nodes with fresh metrics
+2026-02-19 15:55:28,130 - __main__ - INFO - [MONITOR] Monitoring: Updated 5 nodes with fresh metrics
+2026-02-19 15:55:29,929 - __main__ - INFO - [MONITOR] Monitoring: Updated 5 nodes with fresh metrics
+2026-02-19 15:55:31,134 - __main__ - INFO - [MONITOR] Monitoring: Updated 5 nodes with fresh metrics
+2026-02-19 15:55:32,933 - __main__ - INFO - [MONITOR] Monitoring: Updated 5 nodes with fresh metrics
+2026-02-19 15:55:34,138 - __main__ - INFO - [MONITOR] Monitoring: Updated 5 nodes with fresh metrics
+2026-02-19 15:55:35,935 - __main__ - INFO - [MONITOR] Monitoring: Updated 5 nodes with fresh metrics
+2026-02-19 15:55:37,142 - __main__ - INFO - [MONITOR] Monitoring: Updated 5 nodes with fresh metrics
+2026-02-19 15:55:38,939 - __main__ - INFO - [MONITOR] Monitoring: Updated 5 nodes with fresh metrics
+2026-02-19 15:55:40,145 - __main__ - INFO - [MONITOR] Monitoring: Updated 5 nodes with fresh metrics
+2026-02-19 15:55:41,942 - __main__ - INFO - [MONITOR] Monitoring: Updated 5 nodes with fresh metrics
+2026-02-19 15:55:43,149 - __main__ - INFO - [MONITOR] Monitoring: Updated 5 nodes with fresh metrics
+2026-02-19 15:55:44,946 - __main__ - INFO - [MONITOR] Monitoring: Updated 5 nodes with fresh metrics
+2026-02-19 15:55:46,152 - __main__ - INFO - [MONITOR] Monitoring: Updated 5 nodes with fresh metrics
+2026-02-19 15:55:47,949 - __main__ - INFO - [MONITOR] Monitoring: Updated 5 nodes with fresh metrics
+2026-02-19 15:55:49,155 - __main__ - INFO - [MONITOR] Monitoring: Updated 5 nodes with fresh metrics
+2026-02-19 15:55:50,952 - __main__ - INFO - [MONITOR] Monitoring: Updated 5 nodes with fresh metrics
+2026-02-19 15:55:52,159 - __main__ - INFO - [MONITOR] Monitoring: Updated 5 nodes with fresh metrics
+2026-02-19 15:55:53,955 - __main__ - INFO - [MONITOR] Monitoring: Updated 5 nodes with fresh metrics
+2026-02-19 15:55:55,161 - __main__ - INFO - [MONITOR] Monitoring: Updated 5 nodes with fresh metrics
+2026-02-19 15:55:56,958 - __main__ - INFO - [MONITOR] Monitoring: Updated 5 nodes with fresh metrics
+2026-02-19 15:55:58,163 - __main__ - INFO - [MONITOR] Monitoring: Updated 5 nodes with fresh metrics
+2026-02-19 15:55:59,960 - __main__ - INFO - [MONITOR] Monitoring: Updated 5 nodes with fresh metrics
+2026-02-19 15:56:01,165 - __main__ - INFO - [MONITOR] Monitoring: Updated 5 nodes with fresh metrics
+2026-02-19 15:56:02,963 - __main__ - INFO - [MONITOR] Monitoring: Updated 5 nodes with fresh metrics
+2026-02-19 15:56:04,170 - __main__ - INFO - [MONITOR] Monitoring: Updated 5 nodes with fresh metrics
+2026-02-19 15:56:05,968 - __main__ - INFO - [MONITOR] Monitoring: Updated 5 nodes with fresh metrics
+2026-02-19 15:56:07,174 - __main__ - INFO - [MONITOR] Monitoring: Updated 5 nodes with fresh metrics
+2026-02-19 15:56:08,970 - __main__ - INFO - [MONITOR] Monitoring: Updated 5 nodes with fresh metrics
+2026-02-19 15:56:10,178 - __main__ - INFO - [MONITOR] Monitoring: Updated 5 nodes with fresh metrics
+2026-02-19 15:56:11,974 - __main__ - INFO - [MONITOR] Monitoring: Updated 5 nodes with fresh metrics
+2026-02-19 15:56:13,182 - __main__ - INFO - [MONITOR] Monitoring: Updated 5 nodes with fresh metrics
+2026-02-19 15:56:14,975 - __main__ - INFO - [MONITOR] Monitoring: Updated 5 nodes with fresh metrics
+2026-02-19 15:56:16,185 - __main__ - INFO - [MONITOR] Monitoring: Updated 5 nodes with fresh metrics
+2026-02-19 15:56:17,978 - __main__ - INFO - [MONITOR] Monitoring: Updated 5 nodes with fresh metrics
+2026-02-19 15:56:19,188 - __main__ - INFO - [MONITOR] Monitoring: Updated 5 nodes with fresh metrics
+2026-02-19 15:56:20,981 - __main__ - INFO - [MONITOR] Monitoring: Updated 5 nodes with fresh metrics
+2026-02-19 15:56:22,191 - __main__ - INFO - [MONITOR] Monitoring: Updated 5 nodes with fresh metrics
+2026-02-19 15:56:23,982 - __main__ - INFO - [MONITOR] Monitoring: Updated 5 nodes with fresh metrics
+2026-02-19 15:56:25,195 - __main__ - INFO - [MONITOR] Monitoring: Updated 5 nodes with fresh metrics
+2026-02-19 15:56:26,986 - __main__ - INFO - [MONITOR] Monitoring: Updated 5 nodes with fresh metrics
+2026-02-19 15:56:28,198 - __main__ - INFO - [MONITOR] Monitoring: Updated 5 nodes with fresh metrics
+2026-02-19 15:56:29,990 - __main__ - INFO - [MONITOR] Monitoring: Updated 5 nodes with fresh metrics
+2026-02-19 15:56:31,201 - __main__ - INFO - [MONITOR] Monitoring: Updated 5 nodes with fresh metrics
+2026-02-19 15:56:32,992 - __main__ - INFO - [MONITOR] Monitoring: Updated 5 nodes with fresh metrics
+2026-02-19 15:56:34,204 - __main__ - INFO - [MONITOR] Monitoring: Updated 5 nodes with fresh metrics
+2026-02-19 15:56:35,994 - __main__ - INFO - [MONITOR] Monitoring: Updated 5 nodes with fresh metrics
+2026-02-19 15:56:37,209 - __main__ - INFO - [MONITOR] Monitoring: Updated 5 nodes with fresh metrics
+2026-02-19 15:56:38,996 - __main__ - INFO - [MONITOR] Monitoring: Updated 5 nodes with fresh metrics
+2026-02-19 15:56:40,211 - __main__ - INFO - [MONITOR] Monitoring: Updated 5 nodes with fresh metrics
+2026-02-19 15:56:41,998 - __main__ - INFO - [MONITOR] Monitoring: Updated 5 nodes with fresh metrics
+2026-02-19 15:56:43,212 - __main__ - INFO - [MONITOR] Monitoring: Updated 5 nodes with fresh metrics
+2026-02-19 15:56:43,466 - __main__ - INFO - Initializing Predictive Infrastructure Intelligence...
+2026-02-19 15:56:43,466 - __main__ - INFO - Configuration: {'app_name': 'Predictive Infrastructure Intelligence', 'debug': True, 'host': '0.0.0.0', 'port': 5000, 'log_level': 'DEBUG', 'monitoring_interval': 3, 'max_history': 1000, 'k8s_namespace': 'default', 'ml_enabled': True, 'auto_remediation': False}
+2026-02-19 15:56:43,467 - kubernetes_manager - WARNING - Kubernetes config not available: Invalid kube-config file. No configuration found.
+2026-02-19 15:56:43,467 - kubernetes_manager - INFO - Will operate in DEMO MODE without real cluster
+2026-02-19 15:56:43,467 - kubernetes_manager - INFO - Kubernetes manager in DEMO MODE
+2026-02-19 15:56:43,493 - ml_decision_engine - INFO - [OK] ML model trained on synthetic data
+2026-02-19 15:56:43,493 - ml_decision_engine - INFO - [OK] ML Decision Engine initialized
+2026-02-19 15:56:43,493 - __main__ - INFO - [OK] Core components initialized successfully
+2026-02-19 15:56:43,493 - __main__ - WARNING - [WARN] Running in DEMO MODE - no Kubernetes cluster available
+2026-02-19 15:56:43,493 - audit_logger - INFO - AUDIT: SYSTEM_INIT:cluster by system - demo_mode
+2026-02-19 15:56:43,500 - __main__ - INFO - ======================================================================
+2026-02-19 15:56:43,501 - __main__ - INFO - Starting Predictive Infrastructure Intelligence
+2026-02-19 15:56:43,501 - __main__ - INFO - Environment: development
+2026-02-19 15:56:43,501 - __main__ - INFO - Log Level: DEBUG
+2026-02-19 15:56:43,501 - __main__ - INFO - ======================================================================
+2026-02-19 15:56:43,501 - __main__ - INFO - [OK] Initialized 5 demo nodes
+2026-02-19 15:56:43,502 - __main__ - INFO - [MONITOR] Monitoring: Updated 5 nodes with fresh metrics
+2026-02-19 15:56:43,502 - __main__ - INFO - Monitoring service started
+2026-02-19 15:56:43,503 - event_manager - INFO - 📝 Event: INFO - Monitoring Service Started
+2026-02-19 15:56:43,503 - __main__ - INFO - [OK] Monitoring service started
+2026-02-19 15:56:43,503 - __main__ - INFO - Configuration: {'app_name': 'Predictive Infrastructure Intelligence', 'debug': True, 'host': '0.0.0.0', 'port': 5000, 'log_level': 'DEBUG', 'monitoring_interval': 3, 'max_history': 1000, 'k8s_namespace': 'default', 'ml_enabled': True, 'auto_remediation': False}
+2026-02-19 15:56:43,503 - __main__ - INFO - Port: 5000, Host: 0.0.0.0
+2026-02-19 15:56:43,503 - __main__ - INFO - Workers/Threads: 4
+2026-02-19 15:56:43,503 - __main__ - INFO - Starting Flask server...
+2026-02-19 15:56:43,531 - werkzeug - INFO - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:5000
+ * Running on http://192.168.1.39:5000
+2026-02-19 15:56:43,532 - werkzeug - INFO - [33mPress CTRL+C to quit[0m
+2026-02-19 15:56:43,533 - werkzeug - INFO -  * Restarting with stat
+2026-02-19 15:56:45,001 - __main__ - INFO - [MONITOR] Monitoring: Updated 5 nodes with fresh metrics
+2026-02-19 15:56:45,344 - __main__ - INFO - Initializing Predictive Infrastructure Intelligence...
+2026-02-19 15:56:45,344 - __main__ - INFO - Configuration: {'app_name': 'Predictive Infrastructure Intelligence', 'debug': True, 'host': '0.0.0.0', 'port': 5000, 'log_level': 'DEBUG', 'monitoring_interval': 3, 'max_history': 1000, 'k8s_namespace': 'default', 'ml_enabled': True, 'auto_remediation': True}
+2026-02-19 15:56:45,345 - kubernetes_manager - WARNING - Kubernetes config not available: Invalid kube-config file. No configuration found.
+2026-02-19 15:56:45,345 - kubernetes_manager - INFO - Will operate in DEMO MODE without real cluster
+2026-02-19 15:56:45,345 - kubernetes_manager - INFO - Kubernetes manager in DEMO MODE
+2026-02-19 15:56:45,366 - ml_decision_engine - INFO - [OK] ML model trained on synthetic data
+2026-02-19 15:56:45,366 - ml_decision_engine - INFO - [OK] ML Decision Engine initialized
+2026-02-19 15:56:45,366 - __main__ - INFO - [OK] Core components initialized successfully
+2026-02-19 15:56:45,366 - __main__ - WARNING - [WARN] Running in DEMO MODE - no Kubernetes cluster available
+2026-02-19 15:56:45,366 - audit_logger - INFO - AUDIT: SYSTEM_INIT:cluster by system - demo_mode
+2026-02-19 15:56:45,377 - __main__ - INFO - ======================================================================
+2026-02-19 15:56:45,377 - __main__ - INFO - Starting Predictive Infrastructure Intelligence
+2026-02-19 15:56:45,377 - __main__ - INFO - Environment: development
+2026-02-19 15:56:45,377 - __main__ - INFO - Log Level: DEBUG
+2026-02-19 15:56:45,378 - __main__ - INFO - ======================================================================
+2026-02-19 15:56:45,378 - __main__ - INFO - [OK] Initialized 5 demo nodes
+2026-02-19 15:56:45,379 - __main__ - INFO - [MONITOR] Monitoring: Updated 5 nodes with fresh metrics
+2026-02-19 15:56:45,379 - __main__ - INFO - Monitoring service started
+2026-02-19 15:56:45,380 - event_manager - INFO - 📝 Event: INFO - Monitoring Service Started
+2026-02-19 15:56:45,380 - __main__ - INFO - [OK] Monitoring service started
+2026-02-19 15:56:45,380 - __main__ - INFO - Configuration: {'app_name': 'Predictive Infrastructure Intelligence', 'debug': True, 'host': '0.0.0.0', 'port': 5000, 'log_level': 'DEBUG', 'monitoring_interval': 3, 'max_history': 1000, 'k8s_namespace': 'default', 'ml_enabled': True, 'auto_remediation': True}
+2026-02-19 15:56:45,380 - __main__ - INFO - Port: 5000, Host: 0.0.0.0
+2026-02-19 15:56:45,380 - __main__ - INFO - Workers/Threads: 4
+2026-02-19 15:56:45,380 - __main__ - INFO - Starting Flask server...
+2026-02-19 15:56:45,395 - werkzeug - WARNING -  * Debugger is active!
+2026-02-19 15:56:45,399 - werkzeug - INFO -  * Debugger PIN: 544-885-708
+2026-02-19 15:56:46,215 - __main__ - INFO - [MONITOR] Monitoring: Updated 5 nodes with fresh metrics
+2026-02-19 15:56:48,002 - __main__ - INFO - [MONITOR] Monitoring: Updated 5 nodes with fresh metrics
+2026-02-19 15:56:48,380 - __main__ - INFO - [MONITOR] Monitoring: Updated 5 nodes with fresh metrics
+2026-02-19 15:56:49,218 - __main__ - INFO - [MONITOR] Monitoring: Updated 5 nodes with fresh metrics
+2026-02-19 15:56:51,004 - __main__ - INFO - [MONITOR] Monitoring: Updated 5 nodes with fresh metrics
+2026-02-19 15:56:51,383 - __main__ - INFO - [MONITOR] Monitoring: Updated 5 nodes with fresh metrics
+2026-02-19 15:56:52,223 - __main__ - INFO - [MONITOR] Monitoring: Updated 5 nodes with fresh metrics
+2026-02-19 15:56:54,008 - __main__ - INFO - [MONITOR] Monitoring: Updated 5 nodes with fresh metrics
+2026-02-19 15:56:54,386 - __main__ - INFO - [MONITOR] Monitoring: Updated 5 nodes with fresh metrics
+2026-02-19 15:56:55,225 - __main__ - INFO - [MONITOR] Monitoring: Updated 5 nodes with fresh metrics
+2026-02-19 15:56:57,011 - __main__ - INFO - [MONITOR] Monitoring: Updated 5 nodes with fresh metrics
+2026-02-19 15:56:57,388 - __main__ - INFO - [MONITOR] Monitoring: Updated 5 nodes with fresh metrics
+2026-02-19 15:56:58,226 - __main__ - INFO - [MONITOR] Monitoring: Updated 5 nodes with fresh metrics
+2026-02-19 15:57:00,016 - __main__ - INFO - [MONITOR] Monitoring: Updated 5 nodes with fresh metrics
+2026-02-19 15:57:00,389 - __main__ - INFO - [MONITOR] Monitoring: Updated 5 nodes with fresh metrics
+2026-02-19 15:57:01,229 - __main__ - INFO - [MONITOR] Monitoring: Updated 5 nodes with fresh metrics
+2026-02-19 15:57:03,023 - __main__ - INFO - [MONITOR] Monitoring: Updated 5 nodes with fresh metrics
+2026-02-19 15:57:03,392 - __main__ - INFO - [MONITOR] Monitoring: Updated 5 nodes with fresh metrics
+2026-02-19 15:57:04,234 - __main__ - INFO - [MONITOR] Monitoring: Updated 5 nodes with fresh metrics
+2026-02-19 15:57:06,027 - __main__ - INFO - [MONITOR] Monitoring: Updated 5 nodes with fresh metrics
+2026-02-19 15:57:06,397 - __main__ - INFO - [MONITOR] Monitoring: Updated 5 nodes with fresh metrics
+2026-02-19 15:57:07,236 - __main__ - INFO - [MONITOR] Monitoring: Updated 5 nodes with fresh metrics
+2026-02-19 15:57:09,031 - __main__ - INFO - [MONITOR] Monitoring: Updated 5 nodes with fresh metrics
+2026-02-19 15:57:09,403 - __main__ - INFO - [MONITOR] Monitoring: Updated 5 nodes with fresh metrics
+2026-02-19 15:57:10,239 - __main__ - INFO - [MONITOR] Monitoring: Updated 5 nodes with fresh metrics
+2026-02-19 15:57:12,040 - __main__ - INFO - [MONITOR] Monitoring: Updated 5 nodes with fresh metrics
+2026-02-19 15:57:12,407 - __main__ - INFO - [MONITOR] Monitoring: Updated 5 nodes with fresh metrics
+2026-02-19 15:57:13,246 - __main__ - INFO - [MONITOR] Monitoring: Updated 5 nodes with fresh metrics
+2026-02-19 15:57:15,051 - __main__ - INFO - [MONITOR] Monitoring: Updated 5 nodes with fresh metrics
+2026-02-19 15:57:15,410 - __main__ - INFO - [MONITOR] Monitoring: Updated 5 nodes with fresh metrics
+2026-02-19 15:57:16,250 - __main__ - INFO - [MONITOR] Monitoring: Updated 5 nodes with fresh metrics
+2026-02-19 15:57:18,077 - __main__ - INFO - [MONITOR] Monitoring: Updated 5 nodes with fresh metrics
+2026-02-19 15:57:18,413 - __main__ - INFO - [MONITOR] Monitoring: Updated 5 nodes with fresh metrics
+2026-02-19 15:57:19,257 - __main__ - INFO - [MONITOR] Monitoring: Updated 5 nodes with fresh metrics
+2026-02-19 15:57:21,082 - __main__ - INFO - [MONITOR] Monitoring: Updated 5 nodes with fresh metrics
+2026-02-19 15:57:21,415 - __main__ - INFO - [MONITOR] Monitoring: Updated 5 nodes with fresh metrics
+2026-02-19 15:57:22,265 - __main__ - INFO - [MONITOR] Monitoring: Updated 5 nodes with fresh metrics
+2026-02-19 15:57:24,086 - __main__ - INFO - [MONITOR] Monitoring: Updated 5 nodes with fresh metrics
+2026-02-19 15:57:24,418 - __main__ - INFO - [MONITOR] Monitoring: Updated 5 nodes with fresh metrics
+2026-02-19 15:57:25,270 - __main__ - INFO - [MONITOR] Monitoring: Updated 5 nodes with fresh metrics
+2026-02-19 15:57:27,089 - __main__ - INFO - [MONITOR] Monitoring: Updated 5 nodes with fresh metrics
+2026-02-19 15:57:27,424 - __main__ - INFO - [MONITOR] Monitoring: Updated 5 nodes with fresh metrics
+2026-02-19 15:57:28,275 - __main__ - INFO - [MONITOR] Monitoring: Updated 5 nodes with fresh metrics
+2026-02-19 15:57:30,095 - __main__ - INFO - [MONITOR] Monitoring: Updated 5 nodes with fresh metrics
+2026-02-19 15:57:30,428 - __main__ - INFO - [MONITOR] Monitoring: Updated 5 nodes with fresh metrics
+2026-02-19 15:57:31,280 - __main__ - INFO - [MONITOR] Monitoring: Updated 5 nodes with fresh metrics
+2026-02-19 15:57:33,100 - __main__ - INFO - [MONITOR] Monitoring: Updated 5 nodes with fresh metrics
+2026-02-19 15:57:33,236 - werkzeug - INFO - 127.0.0.1 - - [19/Feb/2026 15:57:33] "GET /api/health HTTP/1.1" 200 -
+2026-02-19 15:57:33,239 - werkzeug - INFO - 127.0.0.1 - - [19/Feb/2026 15:57:33] "GET /api/nodes HTTP/1.1" 200 -
+2026-02-19 15:57:33,241 - werkzeug - INFO - 127.0.0.1 - - [19/Feb/2026 15:57:33] "GET /api/events HTTP/1.1" 200 -
+2026-02-19 15:57:33,245 - __main__ - INFO - 📊 Stats: 5 nodes | Health: 48.3% | Risks: 3 | Avg Status: 2H 0D | Migrations: 0
+2026-02-19 15:57:33,245 - werkzeug - INFO - 127.0.0.1 - - [19/Feb/2026 15:57:33] "GET /api/stats HTTP/1.1" 200 -
+2026-02-19 15:57:33,431 - __main__ - INFO - [MONITOR] Monitoring: Updated 5 nodes with fresh metrics
+2026-02-19 15:57:34,290 - __main__ - INFO - [MONITOR] Monitoring: Updated 5 nodes with fresh metrics
+2026-02-19 15:57:36,102 - __main__ - INFO - [MONITOR] Monitoring: Updated 5 nodes with fresh metrics
+2026-02-19 15:57:36,433 - __main__ - INFO - [MONITOR] Monitoring: Updated 5 nodes with fresh metrics
+2026-02-19 15:57:37,293 - __main__ - INFO - [MONITOR] Monitoring: Updated 5 nodes with fresh metrics
+2026-02-19 15:57:39,107 - __main__ - INFO - [MONITOR] Monitoring: Updated 5 nodes with fresh metrics
+2026-02-19 15:57:39,435 - __main__ - INFO - [MONITOR] Monitoring: Updated 5 nodes with fresh metrics
+2026-02-19 15:57:40,301 - __main__ - INFO - [MONITOR] Monitoring: Updated 5 nodes with fresh metrics
+2026-02-19 15:57:42,112 - __main__ - INFO - [MONITOR] Monitoring: Updated 5 nodes with fresh metrics
+2026-02-19 15:57:42,438 - __main__ - INFO - [MONITOR] Monitoring: Updated 5 nodes with fresh metrics
+2026-02-19 15:57:43,308 - __main__ - INFO - [MONITOR] Monitoring: Updated 5 nodes with fresh metrics
+2026-02-19 15:57:45,115 - __main__ - INFO - [MONITOR] Monitoring: Updated 5 nodes with fresh metrics
+2026-02-19 15:57:45,443 - __main__ - INFO - [MONITOR] Monitoring: Updated 5 nodes with fresh metrics
+2026-02-19 15:57:46,316 - __main__ - INFO - [MONITOR] Monitoring: Updated 5 nodes with fresh metrics
+2026-02-19 15:57:48,120 - __main__ - INFO - [MONITOR] Monitoring: Updated 5 nodes with fresh metrics
+2026-02-19 15:57:48,447 - __main__ - INFO - [MONITOR] Monitoring: Updated 5 nodes with fresh metrics
+2026-02-19 15:57:49,321 - __main__ - INFO - [MONITOR] Monitoring: Updated 5 nodes with fresh metrics
+2026-02-19 15:57:51,124 - __main__ - INFO - [MONITOR] Monitoring: Updated 5 nodes with fresh metrics
+2026-02-19 15:57:51,451 - __main__ - INFO - [MONITOR] Monitoring: Updated 5 nodes with fresh metrics
+2026-02-19 15:57:52,325 - __main__ - INFO - [MONITOR] Monitoring: Updated 5 nodes with fresh metrics
+2026-02-19 15:57:54,127 - __main__ - INFO - [MONITOR] Monitoring: Updated 5 nodes with fresh metrics
+2026-02-19 15:57:54,457 - __main__ - INFO - [MONITOR] Monitoring: Updated 5 nodes with fresh metrics
+2026-02-19 15:57:55,329 - __main__ - INFO - [MONITOR] Monitoring: Updated 5 nodes with fresh metrics
+2026-02-19 15:57:57,134 - __main__ - INFO - [MONITOR] Monitoring: Updated 5 nodes with fresh metrics
+2026-02-19 15:57:57,460 - __main__ - INFO - [MONITOR] Monitoring: Updated 5 nodes with fresh metrics
+2026-02-19 15:57:57,856 - werkzeug - INFO - 127.0.0.1 - - [19/Feb/2026 15:57:57] "GET / HTTP/1.1" 200 -
+2026-02-19 15:57:57,922 - werkzeug - INFO - 127.0.0.1 - - [19/Feb/2026 15:57:57] "GET /styles.css HTTP/1.1" 200 -
+2026-02-19 15:57:57,934 - werkzeug - INFO - 127.0.0.1 - - [19/Feb/2026 15:57:57] "GET /script.js HTTP/1.1" 200 -
+2026-02-19 15:57:58,334 - __main__ - INFO - [MONITOR] Monitoring: Updated 5 nodes with fresh metrics
+2026-02-19 15:57:58,667 - werkzeug - INFO - 127.0.0.1 - - [19/Feb/2026 15:57:58] "GET /api/health HTTP/1.1" 200 -
+2026-02-19 15:57:58,674 - werkzeug - INFO - 127.0.0.1 - - [19/Feb/2026 15:57:58] "[33mGET /favicon.ico HTTP/1.1[0m" 404 -
+2026-02-19 15:57:58,679 - __main__ - INFO - 📊 Stats: 5 nodes | Health: 45.5% | Risks: 3 | Avg Status: 2H 0D | Migrations: 0
+2026-02-19 15:57:58,681 - werkzeug - INFO - 127.0.0.1 - - [19/Feb/2026 15:57:58] "GET /api/stats HTTP/1.1" 200 -
+2026-02-19 15:57:58,691 - werkzeug - INFO - 127.0.0.1 - - [19/Feb/2026 15:57:58] "GET /api/nodes HTTP/1.1" 200 -
+2026-02-19 15:57:58,698 - werkzeug - INFO - 127.0.0.1 - - [19/Feb/2026 15:57:58] "GET /api/events HTTP/1.1" 200 -
+2026-02-19 15:57:58,720 - __main__ - INFO - DEBUG: /api/analytics/cluster-health endpoint called
+2026-02-19 15:57:58,720 - kubernetes_manager - WARNING - Kubernetes config not available: Invalid kube-config file. No configuration found.
+2026-02-19 15:57:58,721 - kubernetes_manager - INFO - Will operate in DEMO MODE without real cluster
+2026-02-19 15:57:58,721 - kubernetes_manager - INFO - Kubernetes manager in DEMO MODE
+2026-02-19 15:57:58,741 - app - INFO - Initializing Predictive Infrastructure Intelligence...
+2026-02-19 15:57:58,741 - app - INFO - Configuration: {'app_name': 'Predictive Infrastructure Intelligence', 'debug': True, 'host': '0.0.0.0', 'port': 5000, 'log_level': 'DEBUG', 'monitoring_interval': 3, 'max_history': 1000, 'k8s_namespace': 'default', 'ml_enabled': True, 'auto_remediation': True}
+2026-02-19 15:57:58,742 - kubernetes_manager - WARNING - Kubernetes config not available: Invalid kube-config file. No configuration found.
+2026-02-19 15:57:58,742 - kubernetes_manager - INFO - Will operate in DEMO MODE without real cluster
+2026-02-19 15:57:58,742 - kubernetes_manager - INFO - Kubernetes manager in DEMO MODE
+2026-02-19 15:57:58,774 - ml_decision_engine - INFO - [OK] ML model trained on synthetic data
+2026-02-19 15:57:58,774 - ml_decision_engine - INFO - [OK] ML Decision Engine initialized
+2026-02-19 15:57:58,775 - app - INFO - [OK] Core components initialized successfully
+2026-02-19 15:57:58,775 - app - WARNING - [WARN] Running in DEMO MODE - no Kubernetes cluster available
+2026-02-19 15:57:58,775 - audit_logger - INFO - AUDIT: SYSTEM_INIT:cluster by system - demo_mode
+2026-02-19 15:57:58,784 - __main__ - INFO - DEBUG: Returning cluster health: {'cluster_health_score': 100, 'average_node_health': 100, 'nodes_at_risk': 0, 'cluster_health_trend': 'stable', 'healthy_nodes': 0, 'degraded_nodes': 0, 'critical_nodes': 0}
+2026-02-19 15:57:58,785 - werkzeug - INFO - 127.0.0.1 - - [19/Feb/2026 15:57:58] "GET /api/analytics/cluster-health HTTP/1.1" 200 -
+2026-02-19 15:57:58,792 - werkzeug - INFO - 127.0.0.1 - - [19/Feb/2026 15:57:58] "POST /api/monitoring/start HTTP/1.1" 200 -
+2026-02-19 15:57:58,795 - werkzeug - INFO - 127.0.0.1 - - [19/Feb/2026 15:57:58] "GET /api/events/stream HTTP/1.1" 200 -
+2026-02-19 15:57:58,803 - werkzeug - INFO - 127.0.0.1 - - [19/Feb/2026 15:57:58] "GET /api/nodes HTTP/1.1" 200 -
+2026-02-19 15:57:58,804 - werkzeug - INFO - 127.0.0.1 - - [19/Feb/2026 15:57:58] "GET /api/events HTTP/1.1" 200 -
+2026-02-19 15:57:58,806 - __main__ - INFO - 📊 Stats: 5 nodes | Health: 45.5% | Risks: 3 | Avg Status: 2H 0D | Migrations: 0
+2026-02-19 15:57:58,807 - werkzeug - INFO - 127.0.0.1 - - [19/Feb/2026 15:57:58] "GET /api/stats HTTP/1.1" 200 -
