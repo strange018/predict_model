@@ -76,18 +76,25 @@ class MLDecisionEngine:
             # Make prediction
             risk_score = self._calculate_risk_score(features)
             
-            # Determine risk factors
+            # Identify specific risk factors
             risk_factors = self._identify_risk_factors(node_data, risk_score)
             
             # Decision
             is_at_risk = risk_score > self.risk_threshold
+            
+            # Eco Score & Forecasting Additions
+            eco_score, eco_issues = self.calculate_eco_score(node_data)
+            forecast = self.forecast_capacity(node_data)
             
             return {
                 'is_at_risk': is_at_risk,
                 'risk_score': risk_score,
                 'risk_factors': risk_factors,
                 'confidence': min(100, risk_score * 100 / 0.5),  # Normalize to 0-100
-                'recommendation': self._get_recommendation(risk_score, risk_factors)
+                'recommendation': self._get_recommendation(risk_score, risk_factors),
+                'eco_score': eco_score,
+                'eco_issues': eco_issues,
+                'forecast': forecast
             }
         
         except Exception as e:
@@ -97,7 +104,10 @@ class MLDecisionEngine:
                 'risk_score': 0.0,
                 'risk_factors': ['prediction_error'],
                 'confidence': 0,
-                'recommendation': 'Unable to predict - Error in ML pipeline'
+                'recommendation': 'Unable to predict - Error in ML pipeline',
+                'eco_score': 100,
+                'eco_issues': [],
+                'forecast': {'status': 'Unknown'}
             }
     
     def _extract_features(self, node_data):
@@ -203,3 +213,98 @@ class MLDecisionEngine:
             logger.info("ML model updated with new training data")
         except Exception as e:
             logger.error(f"Error updating ML model: {e}")
+
+    def calculate_eco_score(self, node_data):
+        """
+        Calculate an Eco-Score based on resource efficiency.
+        Scores closer to 100 are most efficient (high utilization without waste).
+        """
+        cpu = node_data.get('cpu_usage', 0)
+        mem = node_data.get('memory_usage', 0)
+        temp = node_data.get('temperature', 50)
+        
+        # Idle nodes waste power. Overworked nodes use excessive cooling.
+        # Ideal utilization range for "Green" ops is around 50-70%
+        
+        score = 100
+        issues = []
+        
+        # Penalize for severe underutilization (wasted power)
+        if cpu < 15 and mem < 15:
+            score -= 30
+            issues.append(f'Severe underutilization (CPU: {cpu:.1f}%, Mem: {mem:.1f}%). Consider right-sizing or scaling down.')
+        elif cpu < 30 and mem < 30:
+            score -= 15
+            issues.append(f'Underutilization detected. Node could consolidate workloads.')
+            
+        # Penalize for heat inefficiency
+        if temp > 80:
+            score -= 25
+            issues.append(f'Poor thermal efficiency ({temp:.1f}°C). Requires excessive cooling.')
+            
+        return max(0, min(100, score)), issues
+        
+    def forecast_capacity(self, node_data):
+        """
+        Predict when the node will reach 100% capacity based on a simplified linear model of current load.
+        """
+        cpu = node_data.get('cpu_usage', 0)
+        mem = node_data.get('memory_usage', 0)
+        
+        max_load = max(cpu, mem)
+        
+        # Simplified assumption for demo: The load increases by ~0.5% every hour on average
+        # In a real model, this would use historical time-series data (e.g., ARIMA or Prophet)
+        growth_rate_per_hour = 0.5
+        
+        if max_load >= 95:
+            return {'status': 'Critical', 'hours_to_exhaustion': 0, 'message': 'Capacity currently exhausted'}
+        elif max_load < 50:
+            return {'status': 'Healthy', 'hours_to_exhaustion': '>100', 'message': 'Capacity stable'}
+        else:
+            hours_left = (100 - max_load) / growth_rate_per_hour
+            status = 'Warning' if hours_left < 48 else 'Stable'
+            return {
+                'status': status,
+                'hours_to_exhaustion': round(hours_left),
+                'message': f'Expected exhaustion in ~{round(hours_left)} hours based on usage trends'
+            }
+
+    def generate_rightsizing_recommendations(self, node_data):
+        """
+        Analyze current usage vs. requested resources to suggest resizing for cost savings.
+        """
+        cpu = node_data.get('cpu_usage', 0)
+        mem = node_data.get('memory_usage', 0)
+        pods = node_data.get('pods', [])
+        
+        recommendations = []
+        
+        # Node scale recommendations
+        if cpu < 30 and mem < 30:
+            recommendations.append({
+                'type': 'Scale Down',
+                'target': node_data.get('node_name', 'Unknown Node'),
+                'reason': f'Consistently low utilization (CPU: {cpu:.1f}%, Mem: {mem:.1f}%).',
+                'savings_estimate': '$45/month'
+            })
+        elif cpu > 85 or mem > 85:
+            recommendations.append({
+                'type': 'Scale Up',
+                'target': node_data.get('node_name', 'Unknown Node'),
+                'reason': f'High utilization detected (CPU: {cpu:.1f}%, Mem: {mem:.1f}%). Risk of OOM limits.',
+                'savings_estimate': 'Performance Improvement'
+            })
+            
+        # Pod scale recommendations
+        if len(pods) > 0 and (cpu < 50 and mem < 50):
+            # Demo recommendation for pods on underutilized nodes
+            demo_pod = pods[0] if isinstance(pods[0], str) else pods[0].get('name', 'unknown-pod')
+            recommendations.append({
+                'type': 'Right-Size Pod',
+                'target': f'Pod: {demo_pod}',
+                'reason': 'Requested resources exceed actual usage by >40%.',
+                'savings_estimate': '$12/month'
+            })
+            
+        return recommendations

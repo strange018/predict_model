@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en" data-theme="light">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -10,19 +11,24 @@
     <!-- Socket.IO for real-time updates -->
     <script src="https://cdn.socket.io/4.7.2/socket.io.min.js"></script>
 </head>
+
 <body>
     <!-- Toast Container -->
     <div id="toast-container" class="toast-container"></div>
-    
+
     <div class="container">
         <!-- Header -->
         <header class="header">
             <div class="header-content">
                 <h1>Predictive Infrastructure Intelligence</h1>
                 <div class="header-controls">
-                    <button id="theme-toggle" class="theme-toggle" title="Toggle dark mode">
-                        <span class="theme-icon">🌙</span>
-                    </button>
+                    <div class="theme-switch-container">
+                        <span class="theme-label">Light</span>
+                        <button id="theme-toggle" class="theme-toggle" title="Toggle dark mode">
+                            <span class="theme-icon">🌙</span>
+                        </button>
+                        <span class="theme-label">Dark</span>
+                    </div>
                     <div class="status-badge">
                         <span class="status-indicator active" id="status-indicator"></span>
                         <span class="status-text" id="status-text">Monitoring Active</span>
@@ -55,6 +61,17 @@
                     <div class="stat-label">Risks Detected</div>
                     <div class="stat-value risk" id="risks-detected">0</div>
                 </div>
+                <!-- New GreenOps / Forecasting Features -->
+                <div class="stat-card">
+                    <div class="stat-label">Avg Eco-Score <span class="change-badge"
+                            style="background:var(--primary-color); color:var(--accent-color)">GreenOps</span></div>
+                    <div class="stat-value success" id="avg-eco-score">--%</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-label">Capacity Warnings <span class="change-badge"
+                            style="background:#FFF5F5; color:var(--warning-color)">Forecast</span></div>
+                    <div class="stat-value risk" id="capacity-warnings">--</div>
+                </div>
                 <div class="stat-card">
                     <div class="stat-label">Workloads Moved</div>
                     <div class="stat-value success" id="workloads-moved">0</div>
@@ -74,12 +91,16 @@
                     <div class="analytics-card">
                         <div class="metric-label">Cluster Health Score</div>
                         <div class="score-display" id="cluster-health">0</div>
-                        <div class="score-bar"><div class="score-fill" id="cluster-health-bar"></div></div>
+                        <div class="score-bar">
+                            <div class="score-fill" id="cluster-health-bar"></div>
+                        </div>
                     </div>
                     <div class="analytics-card">
                         <div class="metric-label">Average Node Health</div>
                         <div class="score-display" id="avg-node-health">0</div>
-                        <div class="score-bar"><div class="score-fill" id="avg-health-bar"></div></div>
+                        <div class="score-bar">
+                            <div class="score-fill" id="avg-health-bar"></div>
+                        </div>
                     </div>
                     <div class="analytics-card">
                         <div class="metric-label">Nodes at Risk</div>
@@ -94,35 +115,61 @@
                 </div>
             </section>
 
-            <!-- Charts Section -->
+            <!-- Enterprise Charts Section -->
             <section class="charts-section">
-                <div class="section-header">
-                    <h2>Real-Time Metrics</h2>
-                    <div class="chart-controls">
-                        <select id="chart-timeframe" class="chart-select">
-                            <option value="30">Last 30 min</option>
-                            <option value="60" selected>Last 1 hour</option>
-                            <option value="180">Last 3 hours</option>
-                            <option value="360">Last 6 hours</option>
+                <div class="section-header"
+                    style="justify-content: space-between; align-items: center; margin-bottom: 1rem;">
+                    <h2>Predictive Health & Capacity Outlook</h2>
+                    <div class="chart-controls" style="display: flex; gap: 0.5rem; align-items: center;">
+                        <button id="toggle-anomalies" class="action-btn"
+                            style="background:var(--primary-color);color:var(--accent-color);border:none;">⊙ Show
+                            Anomalies</button>
+                        <button id="toggle-forecast" class="action-btn"
+                            style="background:#FFF5F5;color:var(--warning-color);border:none;">📈 Show ML
+                            Forecast</button>
+                        <select id="chart-timeframe" class="chart-select"
+                            style="margin-left: 1rem; padding: 0.4rem; border: 1px solid var(--border-color); border-radius: 4px;">
+                            <option value="60" selected>Last 1 Hour</option>
+                            <option value="180">Last 3 Hours</option>
+                            <option value="360">Last 6 Hours</option>
                         </select>
                     </div>
                 </div>
-                <div class="charts-grid">
-                    <div class="chart-card">
-                        <h3>Cluster Health Trend</h3>
-                        <canvas id="health-chart"></canvas>
+
+                <div class="charts-grid" style="grid-template-columns: 2fr 1fr; gap: 1.5rem;">
+                    <!-- Main Timeline Chart (Level 1) -->
+                    <div class="chart-card" style="box-shadow: none; border: 1px solid var(--border-color);">
+                        <h3 style="color: var(--text-primary); margin-bottom: 0.5rem;">Unified Cluster Health Index</h3>
+                        <p style="color: var(--text-secondary); font-size: 0.85rem; margin-bottom: 1rem;">Composite
+                            score tracking CPU strain, memory pressure, and thermal outliers against historical
+                            baseline.</p>
+                        <div style="height: 300px; width: 100%;">
+                            <canvas id="health-chart"></canvas>
+                        </div>
+
+                        <!-- AI Insights Box -->
+                        <div class="ai-insight-box"
+                            style="margin-top: 1.5rem; padding: 1rem; background: #F8FAFC; border-left: 4px solid var(--accent-light); border-radius: 4px;">
+                            <div style="display: flex; align-items: center; gap: 0.5rem; margin-bottom: 0.5rem;">
+                                <span style="font-size: 1.2rem;">✨</span>
+                                <span style="font-weight: 600; color: var(--text-primary);">AI Operational
+                                    Insight</span>
+                            </div>
+                            <p id="ai-insight-text"
+                                style="color: var(--text-secondary); font-size: 0.95rem; margin:0; line-height: 1.5;">
+                                Analyzing current historical baselines...</p>
+                        </div>
                     </div>
-                    <div class="chart-card">
-                        <h3>Node Resource Usage</h3>
-                        <canvas id="resource-chart"></canvas>
-                    </div>
-                    <div class="chart-card">
-                        <h3>Risk Score Distribution</h3>
-                        <canvas id="risk-chart"></canvas>
-                    </div>
-                    <div class="chart-card">
-                        <h3>Event Timeline</h3>
-                        <canvas id="events-chart"></canvas>
+
+                    <!-- Side Resource Chart (Level 2) -->
+                    <div class="chart-card"
+                        style="box-shadow: none; border: 1px solid var(--border-color); display: flex; flex-direction: column;">
+                        <h3 style="color: var(--text-primary); margin-bottom: 0.5rem;">Highest Stress Utilization</h3>
+                        <p style="color: var(--text-secondary); font-size: 0.85rem; margin-bottom: 1rem;">Current
+                            utilization vs limits for nodes under highest risk.</p>
+                        <div style="flex-grow: 1; min-height: 250px;">
+                            <canvas id="resource-chart"></canvas>
+                        </div>
                     </div>
                 </div>
             </section>
@@ -145,25 +192,41 @@
                         <p>Waiting for monitoring data...</p>
                     </div>
                 </div>
-            </section>
+    </div>
+    </section>
 
-            <!-- Node Health Details -->
-            <section class="node-section">
-                <div class="section-header">
-                    <h2>Node Health Metrics</h2>
-                </div>
-                <div class="node-grid" id="node-grid">
-                    <!-- Node cards will be populated here -->
-                </div>
-            </section>
-        </main>
+    <!-- Recommendations Section -->
+    <section class="recommendations-section" style="margin-bottom: 2rem;">
+        <div class="section-header">
+            <h2>Right-Sizing Recommendations <span class="change-badge"
+                    style="background:var(--primary-color); color:var(--accent-color)">GreenOps</span></h2>
+        </div>
+        <div class="recommendations-list" id="recommendations-list"
+            style="display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 1rem;">
+            <div class="empty-state">
+                <p>Analyzing infrastructure for savings...</p>
+            </div>
+        </div>
+    </section>
 
-        <!-- Footer -->
-        <footer class="footer">
-            <p>Predictive Infrastructure Intelligence System - Autonomous Workload Management</p>
-        </footer>
+    <!-- Node Health Details -->
+    <section class="node-section">
+        <div class="section-header">
+            <h2>Node Health Metrics</h2>
+        </div>
+        <div class="node-grid" id="node-grid">
+            <!-- Node cards will be populated here -->
+        </div>
+    </section>
+    </main>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <p>Predictive Infrastructure Intelligence System - Autonomous Workload Management</p>
+    </footer>
     </div>
 
     <script src="script.js"></script>
 </body>
+
 </html>

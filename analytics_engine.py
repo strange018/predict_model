@@ -110,25 +110,18 @@ class AnalyticsEngine:
         sorted_nodes = sorted(node_risks.items(), key=lambda x: x[1], reverse=True)
         return sorted_nodes[:limit]
     
-    def get_cluster_health(self):
-        """Get overall cluster health metrics based on real node data"""
+    def get_cluster_health(self, nodes=None, health_scorer=None):
+        """Get overall cluster health metrics based on real node data.
+        
+        Args:
+            nodes: list of node dicts. If provided, used directly.
+            health_scorer: HealthScorer instance. If provided, used directly.
+        """
         try:
-            # Get current node data
-            from kubernetes_manager import KubernetesManager
-            from health_scorer import HealthScorer
-            
-            k8s_mgr = KubernetesManager()
-            
-            if k8s_mgr.available:
-                nodes = k8s_mgr.get_nodes_metrics()
-            else:
-                # Import demo nodes if available
-                try:
-                    from app import demo_nodes
-                    nodes = list(demo_nodes.values()) if demo_nodes else []
-                except:
-                    nodes = []
-            
+            # Use provided nodes, or fall back to empty list
+            if nodes is None:
+                nodes = []
+
             if not nodes:
                 return {
                     'cluster_health_score': 100,
@@ -137,23 +130,29 @@ class AnalyticsEngine:
                     'cluster_health_trend': 'stable',
                     'healthy_nodes': 0,
                     'degraded_nodes': 0,
-                    'critical_nodes': 0
+                    'critical_nodes': 0,
+                    'total_nodes': 0
                 }
-            
+
+            # Use provided health_scorer instance or create one
+            if health_scorer is None:
+                from health_scorer import HealthScorer
+                health_scorer = HealthScorer()
+
             # Calculate health metrics from actual nodes
             health_scores = []
             at_risk_count = 0
             healthy_count = 0
             degraded_count = 0
             critical_count = 0
-            
+
             for node in nodes:
-                health_info = HealthScorer.calculate_overall_health(node)
+                health_info = health_scorer.calculate_overall_health(node)
                 score = health_info.get('overall_score', 100)
                 status = health_info.get('status', 'healthy')
-                
+
                 health_scores.append(score)
-                
+
                 if status == 'critical':
                     at_risk_count += 1
                     critical_count += 1
@@ -161,16 +160,15 @@ class AnalyticsEngine:
                     degraded_count += 1
                 else:
                     healthy_count += 1
-            
+
             avg_health = np.mean(health_scores) if health_scores else 100
             cluster_health = max(0, avg_health)
-            
+
             # Determine trend based on historical data
             trend = 'stable'
             if self.metrics_history:
                 recent_scores = [e.get('risk_score', 0) for e in list(self.metrics_history)[-10:]]
                 if len(recent_scores) >= 3:
-                    # Calculate trend using linear regression
                     trend_slope = np.polyfit(range(len(recent_scores)), recent_scores, 1)[0]
                     if trend_slope > 0.05:
                         trend = 'degrading'
@@ -178,10 +176,10 @@ class AnalyticsEngine:
                         trend = 'improving'
                     else:
                         trend = 'stable'
-            
+
             return {
-                'cluster_health_score': round(cluster_health, 1),
-                'average_node_health': round(avg_health, 1),
+                'cluster_health_score': round(float(cluster_health), 1),
+                'average_node_health': round(float(avg_health), 1),
                 'nodes_at_risk': at_risk_count,
                 'cluster_health_trend': trend,
                 'healthy_nodes': healthy_count,
@@ -199,7 +197,8 @@ class AnalyticsEngine:
                 'cluster_health_trend': 'stable',
                 'healthy_nodes': 0,
                 'degraded_nodes': 0,
-                'critical_nodes': 0
+                'critical_nodes': 0,
+                'total_nodes': 0
             }
     
     def get_predictions(self, node_id):

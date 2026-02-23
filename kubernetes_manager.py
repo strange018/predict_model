@@ -289,9 +289,10 @@ class KubernetesManager:
             logger.error(f"Error finding target node: {e}")
             return None
     
-    def drain_node(self, node_name, grace_period=30):
+    def drain_node(self, node_name, grace_period=30, slo_aware=True):
         """
         Drain a node by evicting pods gracefully
+        If slo_aware is True, prioritizes evicting critical pods first to protect SLOs.
         Returns number of pods evicted
         """
         try:
@@ -301,7 +302,20 @@ class KubernetesManager:
             
             evicted_count = 0
             
-            for pod in pods.items:
+            pod_list = pods.items
+            if slo_aware:
+                # Sort pods: critical pods first, then others
+                def get_pod_priority(pod):
+                    labels = pod.metadata.labels or {}
+                    if labels.get('tier') == 'critical':
+                        return 0
+                    if labels.get('tier') == 'frontend':
+                        return 1
+                    return 2
+                
+                pod_list = sorted(pod_list, key=get_pod_priority)
+            
+            for pod in pod_list:
                 # Skip pods in kube-system and kube-public (system pods)
                 if pod.metadata.namespace in ['kube-system', 'kube-public', 'kube-node-lease']:
                     continue
