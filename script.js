@@ -29,6 +29,13 @@ class ChartManager {
             }
             chart.update();
         });
+
+        // Special handling for distribution chart (doughnut) - update scales if they exist
+        const distChart = this.charts.distribution;
+        if (distChart) {
+            distChart.update();
+        }
+
     }
 
     _initCharts() {
@@ -129,7 +136,45 @@ class ChartManager {
                     scales: baseScales
                 }
             });
+            // 3. Node Health Distribution (Doughnut)
+            const dCtx = document.getElementById('distribution-chart');
+            if (dCtx) {
+                this.charts.distribution = new Chart(dCtx, {
+                    type: 'doughnut',
+                    data: {
+                        labels: ['Healthy', 'Degraded', 'Critical'],
+                        datasets: [{
+                            data: [0, 0, 0],
+                            backgroundColor: [
+                                'rgba(16, 185, 129, 0.8)', // Green
+                                'rgba(245, 158, 11, 0.8)', // Orange
+                                'rgba(239, 68, 68, 0.8)'   // Red
+                            ],
+                            borderWidth: 0,
+                            hoverOffset: 4
+                        }]
+                    },
+                    options: {
+                        cutout: '70%',
+                        responsive: true,
+                        maintainAspectRatio: false,
+                        plugins: {
+                            legend: {
+                                display: true,
+                                position: 'bottom',
+                                labels: {
+                                    padding: 10,
+                                    usePointStyle: true,
+                                    boxWidth: 8,
+                                    font: { family: fontFamily, size: 10 }
+                                }
+                            }
+                        }
+                    }
+                });
+            }
         }
+
     }
 
     /** Called every analytics poll with cluster analytics data */
@@ -181,7 +226,22 @@ class ChartManager {
 
         chart.update('none'); // Update without full animation
     }
+
+    /** Called every analytics poll to update the distribution doughnut */
+    updateDistributionChart(data) {
+        const chart = this.charts.distribution;
+        if (!chart) return;
+
+        chart.data.datasets[0].data = [
+            data.healthy_nodes || 0,
+            data.degraded_nodes || 0,
+            data.critical_nodes || 0
+        ];
+
+        chart.update('active'); // Use active for subtle expansion effect
+    }
 }
+
 
 // Infrastructure Monitor - Uses Backend API
 class InfrastructureMonitor {
@@ -541,33 +601,32 @@ class InfrastructureMonitor {
 
         recommendations.forEach(rec => {
             const card = document.createElement('div');
-            card.className = 'node-card';
-            card.style.borderLeft = '4px solid var(--primary-color)';
+            card.className = 'node-card recommendation-card';
 
             let icon = '💡';
-            let color = 'var(--text-primary)';
-            if (rec.type === 'Scale Down') { icon = '📉'; color = 'var(--accent-color)'; }
-            else if (rec.type === 'Scale Up') { icon = '📈'; color = 'var(--warning-color)'; }
-            else if (rec.type === 'Right-Size Pod') { icon = '⚖️'; color = 'var(--success-color)'; }
+            let colorClass = 'primary';
+            if (rec.type === 'Scale Down') { icon = '📉'; colorClass = 'accent'; }
+            else if (rec.type === 'Scale Up') { icon = '📈'; colorClass = 'warning'; }
+            else if (rec.type === 'Right-Size Pod') { icon = '⚖️'; colorClass = 'success'; }
 
             card.innerHTML = `
-                <div class="node-name" style="margin-bottom: 0.5rem;">
-                    <span style="font-size: 1.2rem; margin-right: 0.5rem;">${icon}</span>
-                    <span style="font-weight: 600; color: ${color};">${rec.type}</span>
+                <div class="node-name">
+                    <span class="rec-icon">${icon}</span>
+                    <span class="rec-type color-${colorClass}">${rec.type}</span>
                 </div>
-                <div class="metric-row" style="margin-bottom: 0.5rem;">
-                    <span class="metric-label" style="font-weight:bold;">Target:</span>
+                <div class="metric-row">
+                    <span class="metric-label">Target:</span>
                     <span class="metric-value">${rec.target}</span>
                 </div>
-                <div class="metric-row" style="margin-bottom: 0.5rem;">
-                    <span class="metric-label" style="white-space:normal; line-height:1.4;">${rec.reason}</span>
+                <div class="metric-row">
+                    <span class="metric-label reason-text">${rec.reason}</span>
                 </div>
-                <div class="metric-row" style="margin-top: 0.5rem; padding-top: 0.5rem; border-top: 1px dashed var(--border-color);">
+                <div class="metric-row impact-row">
                     <span class="metric-label">Est. Impact:</span>
-                    <span class="metric-value" style="color: var(--success-color); font-weight: 700;">${rec.savings_estimate}</span>
+                    <span class="metric-value savings-value">${rec.savings_estimate}</span>
                 </div>
-                <div style="margin-top: 0.75rem;">
-                    <button class="action-btn" style="width: 100%; border-radius: 4px; padding: 0.4rem;">Apply Recommendation</button>
+                <div class="rec-actions">
+                    <button class="action-btn apply-rec-btn">Apply Recommendation</button>
                 </div>
             `;
             listEl.appendChild(card);
@@ -622,6 +681,8 @@ class InfrastructureMonitor {
         try {
             // Update real-time charts
             this.chartManager.updateHealthChart(data.cluster_health_score);
+            this.chartManager.updateDistributionChart(data);
+
 
             // Cluster Health Score
             const clusterHealth = Math.round(data.cluster_health_score || 0);
